@@ -1,0 +1,38 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    border-bottom: 1px solid black;
+    /*replace border with shadow?*/
+}
+
+nav button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.dark-mode svg {
+    /* fill: red; */
+    /*in case of wanting to change svg color*/
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.add {
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.5s, color 0.5s, border 0.5s;
+}
+.add:hover{
+    background-color: cornflowerblue;
+    color: white;
+    border: 1px solid white;
+}

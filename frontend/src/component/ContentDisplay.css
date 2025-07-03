@@ -1,0 +1,49 @@
+.display-main{
+    height: 100%;
+    display: grid;
+    grid-template-columns: 60vw 1fr;
+}
+/* left-side */
+.left-side{
+    padding: 5% 8%;
+    display: grid;
+    grid-template-rows: 30px 500px 1fr;
+    gap: 25px;
+}
+.search{
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid grey;
+    width: 100%;
+}
+.search:focus{
+    border: 1px solid black;
+}
+
+/* listcontent & tile css */
+.list-content{
+    position: relative;
+    height: 50vh;
+    overflow: auto;
+}
+.tile{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #d1dbe3;
+}
+#date{
+    /* font-weight: bold; */
+}
+#amount{
+    font-size: 18px;
+    font-weight: bold;
+    color: red;
+}
+/* right-side */
+.right-side{
+    padding: 5% 8%;
+    color: white;
+    background-color: #074b78;
+}
