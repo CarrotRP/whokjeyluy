@@ -6,6 +6,9 @@ nav {
     border-bottom: 1px solid black;
     /*replace border with shadow?*/
 }
+nav h1{
+    font-family: 'Dancing Script';
+}
 
 nav button {
     background-color: transparent;

@@ -1,4 +1,4 @@
-footer{
+.lang-parent{
     position: relative;
 }
 .custom-select{
@@ -6,6 +6,7 @@ footer{
     align-items: center;
     grid-template-areas: 'select';
     width: 80px;
+    /* height: 50px; */
     padding: 10px 0;
     cursor: pointer;
     user-select: none;
@@ -32,7 +33,7 @@ footer{
 }
 .dropdown{
     position: absolute;
-    top: -150%;
+    top: -200%;
     list-style: none;
     cursor: pointer;
     width: 80px;
@@ -40,12 +41,12 @@ footer{
     border-radius: 5px;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.3s, top 0.3s, pointer-events 1s;
+    transition: opacity 0.3s, top 0.3s;
 }
 .dropdown-active{
     opacity: 1;
     pointer-events: all;
-    top: -160%;
+    top: -220%;
 }
 .lang{
     padding: 5px;

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect} from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './Footer.css'
 
 function Footer() {
@@ -32,11 +32,13 @@ function Footer() {
 
     return (
         <footer>
-            <div className="custom-select" onClick={handleDropdownClick} ref={selectorRef}>
-                <p className="selected-opt">{selectedOpt}</p>
-            </div>
-            <div className="dropdown" ref={dropdownRef}>
-                {options.map(v => <li className='lang' onClick={() => handleLangClick(v)}>{v}</li>)}
+            <div className="lang-parent">
+                <div className="custom-select" onClick={handleDropdownClick} ref={selectorRef}>
+                    <p className="selected-opt">{selectedOpt}</p>
+                </div>
+                <div className="dropdown" ref={dropdownRef}>
+                    {options.map(v => <li className='lang' onClick={() => handleLangClick(v)}>{v}</li>)}
+                </div>
             </div>
         </footer>
     );

@@ -1,5 +1,4 @@
 const express = require('express');
-// const mysql = require('mysql')
 const mysql = require("mysql2");
 require('dotenv').config();
 
@@ -17,7 +16,8 @@ connection.connect(err => {
         'CREATE DATABASE IF NOT EXISTS wkl', (err, result) => {
             if(err) throw err;
         }
-    )
+    );
+    
     console.log('connected');
 });
 
