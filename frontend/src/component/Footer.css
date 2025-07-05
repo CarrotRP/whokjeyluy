@@ -42,6 +42,7 @@
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s, top 0.3s;
+    background-color: white;
 }
 .dropdown-active{
     opacity: 1;
