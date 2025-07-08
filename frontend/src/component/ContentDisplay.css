@@ -8,7 +8,7 @@
 .left-side{
     padding: 5% 8%;
     display: grid;
-    grid-template-rows: 50px 550px 1fr;
+    grid-template-rows: 50px 500px 1fr;
     gap: 25px;
 }
 .search{
@@ -20,22 +20,63 @@
 .search:focus{
     border: 1px solid black;
 }
+.list{
+    display: grid;
+}
+#pagi{
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #074b78;
+    color: white;
+    justify-self: center;
+    height: 50px;
+    width: 40px;
+}
+#pagi:hover{
+    background-color: #0c649e;
+}
 
 /* listcontent & tile css */
 .list-content{
     position: relative;
     height: 50vh;
-    overflow: auto;
+    padding-right: 10px;
+    overflow-y: auto;
+}
+/* scrollbar */
+.list-content::-webkit-scrollbar{
+    width: 8px;
+    opacity: 0;
+}
+.list-content:hover::-webkit-scrollbar{
+    opacity: 1;
+}
+.list-content::-webkit-scrollbar-track{
+    background-color: whitesmoke;
+    border-radius: 5px;
+}
+.list-content::-webkit-scrollbar-thumb{
+    background-color: #ddd;
+    border-radius: 5px;
+}
+.list-content:hover::-webkit-scrollbar-thumb{
+    background-color: #c9c9c9;
+    opacity: 1;
 }
 .tile{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 0;
+    padding: 10px 0;
     border-bottom: 1px solid #d1dbe3;
 }
+.group{
+    margin-bottom: 10px;
+}
 #date{
-    /* font-weight: bold; */
+    font-weight: bold;
+    padding-top: 10px;
 }
 #amount{
     font-size: 18px;

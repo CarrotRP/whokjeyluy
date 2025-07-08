@@ -9,7 +9,8 @@ function Footer() {
     //available languages
     const options = ['English', 'ខ្មែរ']
 
-    const handleDropdownClick = () => {
+    const handleDropdownClick = (e) => {
+        e.stopPropagation();
         dropdownRef.current.classList.toggle('dropdown-active')
         selectorRef.current.classList.toggle('custom-select-active')
     }
@@ -26,8 +27,18 @@ function Footer() {
         const initLanguageCookie = () => {
             document.cookie = `lang=${selectedOpt}`
         }
+        const handleLangOutsideClick = (e) => {
+            if(dropdownRef.current && !dropdownRef.current.contains(e.target)){
+                dropdownRef.current.classList.remove('dropdown-active');
+            }
+        }
 
         initLanguageCookie();
+        document.addEventListener('click', handleLangOutsideClick);
+
+        return () => {
+            document.removeEventListener('click', handleLangOutsideClick);
+        }
     }, []);
 
     return (
@@ -37,7 +48,7 @@ function Footer() {
                     <p className="selected-opt">{selectedOpt}</p>
                 </div>
                 <div className="dropdown" ref={dropdownRef}>
-                    {options.map(v => <li className='lang' onClick={() => handleLangClick(v)}>{v}</li>)}
+                    {options.map((v, i) => <li key={i} className='lang' onClick={() => handleLangClick(v)}>{v}</li>)}
                 </div>
             </div>
         </footer>

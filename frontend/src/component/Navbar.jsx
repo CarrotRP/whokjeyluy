@@ -2,10 +2,11 @@ import Popup from './Popup';
 import './Navbar.css';
 import { useEffect, useRef } from 'react';
 
-function Navbar() {
+function Navbar(props) {
     const popupRef = useRef(null);
     const popupContentRef = useRef(null);
     const currencyRef = useRef(null);
+    const {fetchTransaction, fetchSummary} = props;
 
     const handlePopupOpen = (e) => {
         e.stopPropagation();
@@ -20,6 +21,10 @@ function Navbar() {
         const handleOutsideClick = (e) => {
             if (popupRef.current && popupRef.current.classList.contains('popup-active') && !popupContentRef.current.contains(e.target)) {
                 popupRef.current.classList.remove('popup-active');
+                currencyRef.current.classList.remove('dropdown-c-active');
+            }
+
+            if(currencyRef.current && !currencyRef.current.contains(e.target)){
                 currencyRef.current.classList.remove('dropdown-c-active');
             }
         }
@@ -40,7 +45,7 @@ function Navbar() {
                     </svg>
                 </button>
                 <button className='add' onClick={handlePopupOpen}>+ Add person</button>
-                <Popup currencyRef={currencyRef} popupRef={popupRef} popupContentRef={popupContentRef} handlePopupClose={handlePopupClose} />
+                <Popup currencyRef={currencyRef} popupRef={popupRef} popupContentRef={popupContentRef} handlePopupClose={handlePopupClose} fetchTransaction={fetchTransaction} fetchSummary={fetchSummary}/>
             </span>
         </nav>
     );

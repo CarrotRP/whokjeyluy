@@ -4,16 +4,18 @@ import SummaryBox from "./SummaryBox";
 import Footer from './Footer';
 import './ContentDisplay.css';
 
-function ContentDisplay() {
+function ContentDisplay(props) {
+    const {transactions, summary} = props;
+
     return (
         <main className='display-main'>
             <section className="left-side">
-                <SearchBar />
-                <ListContent />
-                <Footer/>
+                <SearchBar/>
+                <ListContent transactions={transactions} />
+                <Footer />
             </section>
             <section className="right-side">
-                <SummaryBox/>
+                <SummaryBox summary={summary}/>
             </section>
         </main>
     );

@@ -1,12 +1,18 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import './Popup.css';
 
 function Popup(props) {
     const [selectedCurrency, setSelectedCurrency] = useState('USD');
+    const [name, setName] = useState('');
+    const [type, setType] = useState('Borrow');
+    const [amount, setAmount] = useState(0);
+    const [date, setDate] = useState('');
+    const {fetchTransaction, fetchSummary} = props;
 
     const currency = ['USD', '៛'];
 
-    const handleCurrencyDropdown = () => {
+    const handleCurrencyDropdown = (e) => {
+        e.stopPropagation();
         props.currencyRef.current.classList.toggle('dropdown-c-active');
     }
     const handleCurrencyClick = (v) => {
@@ -14,7 +20,34 @@ function Popup(props) {
         props.currencyRef.current.classList.toggle('dropdown-c-active');
     }
     const handleAddClick = () => {
-        // api call here
+        if (name && type && amount && date) {
+            //convert to USD(from Riel, using 1$ = 4000r)
+            var newAmount = selectedCurrency == 'USD' ? amount : amount / 4000;
+
+            //borrow or receive, if borrow add - to the front
+            newAmount = type == 'Borrow' ? -amount : amount;
+
+            fetch('http://localhost:3000/user/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    { name, transaction_type: type, amount: newAmount, date }
+                )
+            }).then(res => res.json())
+                .then(data => {
+                    props.popupRef.current.classList.remove('popup-active');
+                    props.currencyRef.current.classList.remove('dropdown-c-active');
+                    setName('');
+                    setType('Borrow');
+                    setAmount(0);
+                    setDate('');
+                    setSelectedCurrency('USD');
+                    fetchTransaction();
+                    fetchSummary();
+                });
+        }
     }
 
     return (
@@ -25,31 +58,32 @@ function Popup(props) {
                     <button onClick={props.handlePopupClose}>&#215;</button>
                 </div>
                 <div className="inputs">
-                    <input type="text" placeholder="Name" />
+                    <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
                     <div className="type">
                         <span>
-                            <input type="radio" id="borrow" value='borrow' name="type" checked/>
-                            <label htmlFor="borrow" style={{color: 'red'}}>Borrow</label>
+                            <input type="radio" id="borrow" value='Borrow' name="type" checked={type == 'Borrow'} onChange={e => setType(e.target.value)} />
+                            <label htmlFor="borrow" style={{ color: 'red' }}>Borrow</label>
                         </span>
                         <span>
-                            <input type="radio" id="receive" value='receive' name="type" />
-                            <label htmlFor="receive" style={{color: 'green'}}>Receive</label>
+                            <input type="radio" id="receive" value='Receive' name="type" checked={type == 'Receive'} onChange={e => setType(e.target.value)} />
+                            <label htmlFor="receive" style={{ color: 'green' }}>Receive</label>
                         </span>
                     </div>
                     <div className="money">
-                        <input type="number" placeholder="Amount" />
+                        <input type="number" placeholder="Amount" value={amount} onChange={e => setAmount(e.target.value)} />
                         <div className="currency">
                             <div className="custom-c-select" onClick={handleCurrencyDropdown}>
                                 <p className="selected-opt">{selectedCurrency}</p>
                             </div>
                             <div className="currency-dropdown" ref={props.currencyRef}>
-                                {currency.map(v => <li className='lang' onClick={() => handleCurrencyClick(v)}>{v}</li>)}
+                                {currency.map((v, i) => <li key={i} className='lang' onClick={() => handleCurrencyClick(v)}>{v}</li>)}
                             </div>
                         </div>
+                        <p id='fyi'>All currency will be converted to USD</p>
                     </div>
-                    <input type="date" />
+                    <input type="date" value={date} onChange={e => setDate(e.target.value)} required />
                 </div>
-                <button className="add-btn">Add</button>
+                <button className="add-btn" onClick={handleAddClick}>Add</button>
             </div>
         </div>
     );

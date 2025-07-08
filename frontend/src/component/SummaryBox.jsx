@@ -1,11 +1,12 @@
 import ListTile from "./ListTile";
 
-function SummaryBox(){
+function SummaryBox(props){
+    
     return(
         <div className="summary">
             <h3>Summary</h3>
-            {[...Array(3)].map((_, i) => {
-                return <ListTile name={i} amount='owe 10 USD'/>
+            {props.summary.map((v, i) => {
+                return <ListTile key={v.user_id} name={v.name} amount={v.amount} loc='summary'/>
             })}
         </div>
     );
