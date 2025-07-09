@@ -16,7 +16,7 @@ A way to keep track of who borrow or give back your money. You can add the perso
 - express
 
 ### TODO:
-- [ ] paginattion
+- [x] pagination
 - [ ] delete
 - [ ] edit
 - [ ] language
@@ -40,14 +40,10 @@ git clone https://github.com/CarrotRP/whokjeyluy.git
 # NOTE: use 2 terminal for this app
 
 # Go to frontend and install dependencies
-cd whokjeyluy
-cd frontend
-npm install
+cd whokjeyluy/frontend; npm install
 
 # Go to backend and install dependencies
-cd whokjeyluy
-cd backend
-npm install
+cd whokjeyluy/backend; npm install
 
 # Create your database in mysql and call it what you want, 'wkl' for default, then create .env file inside whokjeyluy/backend
 # inside .env

@@ -5,13 +5,25 @@ import Footer from './Footer';
 import './ContentDisplay.css';
 
 function ContentDisplay(props) {
-    const {transactions, summary} = props;
+    const {info, setCurrentPage, fetcher} = props;
+    const {transactions, summary, totalPage, currentPage} = info;
+    const {fetchTransaction, fetchSummary} = fetcher;
 
     return (
         <main className='display-main'>
             <section className="left-side">
-                <SearchBar/>
-                <ListContent transactions={transactions} />
+                <SearchBar setCurrentPage={setCurrentPage}/>
+                <ListContent 
+                    info={{
+                        transactions,
+                        totalPage,
+                        currentPage,
+                    }}
+                    setCurrentPage={setCurrentPage}
+                    fetcher={{
+                        fetchTransaction,
+                        fetchSummary
+                    }}/>
                 <Footer />
             </section>
             <section className="right-side">

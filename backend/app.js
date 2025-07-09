@@ -51,20 +51,37 @@ app.get('/user/get-user', (req, res) => {
 });
 //get users with transaction, for displaying all the transaction along with the user
 app.get('/user/get-transaction', (req, res) => {
-    const { name } = req.query;
+    const { name, page, limit } = req.query;
+    const offset = (page - 1) * limit;
 
-    console.log(name);
+
+
     //user search
     if (name) {
-        connection.query(`SELECT * FROM users JOIN transactions USING(user_id) WHERE name LIKE ? ORDER BY date DESC`, [`%${name}%`], (err, result) => {
+        connection.query(`SELECT COUNT(*) as total FROM users JOIN transactions USING(user_id) WHERE name LIKE ?`,
+            [`%${name}%`], (err, countResult) => {
             if (err) throw err;
-            res.json(result);
-        })
-    } else{
-        connection.query(`SELECT * FROM users JOIN transactions USING(user_id) ORDER BY date DESC LIMIT 5 OFFSET 0`, (err, result) => {
+            const total = countResult[0].total;
+            const totalPage = Math.ceil(total / limit);
+
+            connection.query(`SELECT * FROM users JOIN transactions USING(user_id) WHERE name LIKE ? ORDER BY date DESC LIMIT ? OFFSET ? `,
+                [`%${name}%`, parseInt(limit), parseInt(offset)], (err, result) => {
+                    if (err) throw err;
+                    res.json({ result, totalPage });
+                })
+        });
+    } else {
+        connection.query(`SELECT COUNT(*) AS total FROM transactions`, (err, countResult) => {
             if (err) throw err;
-            res.json(result);
-        })
+            const total = countResult[0].total;
+            const totalPage = Math.ceil(total / limit);
+
+            connection.query(`SELECT * FROM users JOIN transactions USING(user_id) ORDER BY date DESC LIMIT ? OFFSET ?`,
+                [parseInt(limit), parseInt(offset)], (err, result) => {
+                    if (err) throw err;
+                    res.json({ result, totalPage });
+                })
+        });
     }
 })
 

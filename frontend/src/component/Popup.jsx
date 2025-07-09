@@ -7,17 +7,21 @@ function Popup(props) {
     const [type, setType] = useState('Borrow');
     const [amount, setAmount] = useState(0);
     const [date, setDate] = useState('');
-    const {fetchTransaction, fetchSummary} = props;
+    
+    //props
+    const {refs, handlePopupClose, fetcher} = props;
+    const {currencyRef, popupRef, popupContentRef} = refs;
+    const {fetchTransaction, fetchSummary} = fetcher;
 
     const currency = ['USD', '៛'];
 
     const handleCurrencyDropdown = (e) => {
         e.stopPropagation();
-        props.currencyRef.current.classList.toggle('dropdown-c-active');
+        currencyRef.current.classList.toggle('dropdown-c-active');
     }
     const handleCurrencyClick = (v) => {
         setSelectedCurrency(v);
-        props.currencyRef.current.classList.toggle('dropdown-c-active');
+        currencyRef.current.classList.toggle('dropdown-c-active');
     }
     const handleAddClick = () => {
         if (name && type && amount && date) {
@@ -37,8 +41,8 @@ function Popup(props) {
                 )
             }).then(res => res.json())
                 .then(data => {
-                    props.popupRef.current.classList.remove('popup-active');
-                    props.currencyRef.current.classList.remove('dropdown-c-active');
+                    popupRef.current.classList.remove('popup-active');
+                    currencyRef.current.classList.remove('dropdown-c-active');
                     setName('');
                     setType('Borrow');
                     setAmount(0);
@@ -51,11 +55,11 @@ function Popup(props) {
     }
 
     return (
-        <div className="popup" ref={props.popupRef}>
-            <div className="popup-content" ref={props.popupContentRef}>
+        <div className="popup" ref={popupRef}>
+            <div className="popup-content" ref={popupContentRef}>
                 <div className="head">
                     <p>Add person</p>
-                    <button onClick={props.handlePopupClose}>&#215;</button>
+                    <button onClick={handlePopupClose}>&#215;</button>
                 </div>
                 <div className="inputs">
                     <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
@@ -75,7 +79,7 @@ function Popup(props) {
                             <div className="custom-c-select" onClick={handleCurrencyDropdown}>
                                 <p className="selected-opt">{selectedCurrency}</p>
                             </div>
-                            <div className="currency-dropdown" ref={props.currencyRef}>
+                            <div className="currency-dropdown" ref={currencyRef}>
                                 {currency.map((v, i) => <li key={i} className='lang' onClick={() => handleCurrencyClick(v)}>{v}</li>)}
                             </div>
                         </div>
