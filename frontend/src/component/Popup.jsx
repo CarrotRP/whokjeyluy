@@ -24,12 +24,13 @@ function Popup(props) {
         currencyRef.current.classList.toggle('dropdown-c-active');
     }
     const handleAddClick = () => {
+        console.log(selectedCurrency, typeof selectedCurrency, typeof 'usd');
         if (name && type && amount && date) {
             //convert to USD(from Riel, using 1$ = 4000r)
-            var newAmount = selectedCurrency == 'USD' ? amount : amount / 4000;
+            var newAmount = selectedCurrency == 'USD' ? amount : (amount / 4000);
 
             //borrow or receive, if borrow add - to the front
-            newAmount = type == 'Borrow' ? -amount : amount;
+            newAmount = type == 'Borrow' ? -newAmount : newAmount;
 
             fetch('http://localhost:3000/user/add', {
                 method: 'POST',

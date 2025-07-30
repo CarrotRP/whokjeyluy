@@ -14,7 +14,7 @@ function ListContent(props) {
                         return <div className='group' key={grouped[0]}>
                             <p id='date'>{grouped[0]}</p>
                             {grouped[1].map(user => {
-                                return <ListTile key={user.transaction_id} name={user.name} amount={user.amount} />
+                                return <ListTile key={user.transaction_id} name={user.name} amount={Number(user.amount).toFixed(2)} />
                             })}
                         </div>
                     })
