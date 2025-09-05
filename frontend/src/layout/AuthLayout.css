@@ -1,0 +1,90 @@
+.authlayout{
+    display: flex;
+    height: 100vh;
+}
+.left-panel, .right-panel{
+    padding: 80px;
+}
+/* left panel - introduction */
+.left-panel{
+    background-color: var(--primary);
+    color: var(--secondary-text);
+    text-align: center;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+}
+.left-panel h1{
+    font-size: 80px;
+    line-height: 100px;
+}
+.left-panel p{
+    font-size: 32px;
+    font-weight: 300;
+    width: 780px;
+}
+/* right panel - form inputs */
+.right-panel{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 40%;
+}
+.right-panel h1{
+    font-family: 'Dancing Script';
+    font-size: 48px;
+    color: var(--primary);
+}
+.right-panel a{
+    color: var(--primary-text);
+    text-decoration: none;
+    margin-bottom: 40px;
+}
+/* the form */
+.form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 420px;
+}
+.right-panel h2{
+    align-self: center;
+    font-size: 48px;
+    margin-bottom: 30px;
+}
+.form h2 ~ label{
+    margin-top: 10px;
+}
+.form input[type='email'], .form input[type='password']{
+    border-radius: 10px;
+    border: 1px solid var(--border2);
+    height: 40px;
+    width: 100%;
+}
+.form button{
+    background-color: var(--primary);
+    font-weight: 600;
+    font-size: 20px;
+    border-radius: 10px;
+    border: none;
+    color: var(--secondary-text);
+    padding: 10px;
+    width: 30%;
+    align-self: center;
+    cursor: pointer;
+    margin-top: auto;
+    justify-self: end;
+}
+.option{
+    display: flex;
+    justify-content: space-between;
+}
+.option span{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

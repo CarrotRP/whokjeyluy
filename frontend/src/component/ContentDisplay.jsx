@@ -24,7 +24,7 @@ function ContentDisplay(props) {
                         fetchTransaction,
                         fetchSummary
                     }}/>
-                <Footer />
+                {/* <Footer /> */}
             </section>
             <section className="right-side">
                 <SummaryBox summary={summary}/>

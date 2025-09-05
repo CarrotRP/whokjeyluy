@@ -1,6 +1,6 @@
 # WhoKjeyLuy (WhoBorrowMoney)
 
-A way to keep track of who borrow or give back your money. You can add the person, amount, type of transaction('borrow', 'receive'), date, and it will give you the summary. no login, no signup.
+A way to keep track of who borrow or give back your money. You can add the person, amount, type of transaction('borrow', 'receive'), date, and it will give you the summary.
 
 **Currently WIP**
 

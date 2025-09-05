@@ -1,11 +1,12 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const mysql = require("mysql2");
 const sqlite3 = require("sqlite3");
 const cors = require('cors');
 require('dotenv').config();
 
 //db file for sqlite
-//if you dont have it, it will create itself, no worries
+//if you dont have it, it will create itself, no worries, BUT make sure you have the folder 'db' in whokjeyluy/
 const db = new sqlite3.Database('./db/wkl.db');
 
 const app = express();
@@ -13,6 +14,11 @@ app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true
 }))
+
+// mongoose.connect(process.env.db)
+//     .then(res => app.listen(3000))
+//     .catch(err => console.log(err));
+
 app.use(express.json());
 
 //create table

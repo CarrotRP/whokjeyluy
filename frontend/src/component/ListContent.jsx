@@ -1,13 +1,13 @@
 import ListTile from './ListTile';
 
 function ListContent(props) {
-    const {info, setCurrentPage} = props;
-    const {transactions, currentPage, totalPage} = info;
+    // const {info, setCurrentPage} = props;
+    // const {transactions, currentPage, totalPage} = info;
 
     return (
         <div className="list">
             <section className='list-content'>
-                {
+                {/* {
                     // Object.groupBy method from mdn doc
                     //also check out tolocalstring option parameter: https://www.w3schools.com/jsref/jsref_tolocalestring.asp
                     Object.entries(Object.groupBy(transactions, ({ date }) => new Date(date).toLocaleString("en-GB", { dateStyle: 'medium' }))).map(grouped => {
@@ -19,9 +19,12 @@ function ListContent(props) {
                         </div>
                     })
 
-                }
+                } */}
+                {[...new Array(5)].map(_ => {
+                    return <ListTile/>
+                })}
             </section>
-            <div className="pagi-btn">
+            {/* <div className="pagi-btn">
                 {currentPage == 1 ? <></> :
                     <button id='prevPagi' onClick={(e) => setCurrentPage(c => c - 1)}>{currentPage - 1}</button>
                 }
@@ -29,7 +32,7 @@ function ListContent(props) {
                 {currentPage == totalPage ? <></> :
                     <button id='nextPagi' onClick={(e) => setCurrentPage(c => c + 1)}>{currentPage + 1}</button>
                 }
-            </div>
+            </div> */}
         </div>
     );
 }
