@@ -1,0 +1,113 @@
+/* list content */
+.left-content{
+    padding: 25px 0;
+}
+.list{
+    overflow-y: auto;
+    height: 500px;
+}
+.list #transaction-date{
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+/* list tile css in list content */
+.list .tile:hover{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 5px;
+}
+
+/* pagination */
+.page-navi-btn{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 5px;
+    padding: 50px 0;
+}
+.page-navi-btn button{
+    width: 40px;
+    height: 35px;
+    border-radius: 5px;
+    border: 2px solid var(--primary);
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.page-navi-btn button:hover{
+    background-color: var(--primary);
+    cursor: pointer;
+}
+.page-navi-btn button:hover img{
+    filter: brightness(0) invert(1);
+}
+#next-page img,
+#last-page img{
+    transform: rotateZ(180deg);
+}
+#current-page,
+#total-page{
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--primary);
+}
+#current-page{
+    width: 40px;
+    height: 35px;
+    color: var(--secondary-text);
+    border-radius: 5px;
+    display: grid;
+    place-items: center;
+    background-color: var(--primary);
+}
+/* language */
+.language-selector{
+    position: relative;
+    width: 85px;
+}
+.language-selector p span{
+    content: "";
+    width: 0;
+	height: 0;
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	border-top: 7px solid var(--primary-text);
+    transition: transform 300ms;
+}
+.language-selector p{
+    /* padding: 20px 0; */
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 20px;
+    user-select: none;
+    cursor: pointer;
+}
+.language-selector ul{
+    position: absolute;
+    border: 1px solid var(--primary);
+    border-radius: 10px;
+    bottom: 25px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: bottom 500ms, opacity 500ms;
+}
+.language-selector .ul-active{
+    bottom: 30px;
+    opacity: 1;
+    pointer-events: all;
+}
+.language-selector ul li{
+    list-style: none;
+    font-size: 20px;
+    user-select: none;
+    padding: 10px;
+}
+.language-selector ul li:hover{
+    cursor: pointer;
+    background-color: var(--primary);
+    color: var(--secondary-text);
+}

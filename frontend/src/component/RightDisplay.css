@@ -1,0 +1,11 @@
+.right-display h1{
+    font-size: 32px;
+    font-weight: bold;
+    color: var(--secondary-text);
+}
+.right-display p{
+    color: var(--secondary-text);
+}
+.right-display .tile{
+    border-bottom: 1px solid var(--border2);
+}

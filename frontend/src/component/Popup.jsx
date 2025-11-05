@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import './Popup.css';
 
 function Popup(props) {
@@ -7,21 +7,30 @@ function Popup(props) {
     const [type, setType] = useState('Borrow');
     const [amount, setAmount] = useState(0);
     const [date, setDate] = useState('');
-    
+
+    const nameRef = useRef();
+    const triRef = useRef(); //triangle shape ref for animation
+
     //props
-    const {refs, handlePopupClose, fetcher} = props;
-    const {currencyRef, popupRef, popupContentRef} = refs;
-    const {fetchTransaction, fetchSummary} = fetcher;
+    const { refs, handlePopupClose, fetcher } = props;
+    const { currencyRef, popupRef, popupContentRef } = refs;
+    const { fetchTransaction, fetchSummary } = fetcher;
 
     const currency = ['USD', '៛'];
 
+    const handleNameDropdown = () => {
+        nameRef.current?.classList.toggle('lender-names-ul-active')
+    }
+
     const handleCurrencyDropdown = (e) => {
         e.stopPropagation();
-        currencyRef.current.classList.toggle('dropdown-c-active');
+        currencyRef.current.classList.toggle('currency-ul-active');
+        triRef.current.style.transform = triRef.current.style.transform === 'rotateX(180deg)' ? 'rotateX(0deg)' : 'rotateX(180deg)';
     }
     const handleCurrencyClick = (v) => {
         setSelectedCurrency(v);
-        currencyRef.current.classList.toggle('dropdown-c-active');
+        currencyRef.current.classList.toggle('currency-ul-active');
+        triRef.current.style.transform = triRef.current.style.transform === 'rotateX(180deg)' ? 'rotateX(0deg)' : 'rotateX(180deg)';
     }
     const handleAddClick = () => {
         console.log(selectedCurrency, typeof selectedCurrency, typeof 'usd');
@@ -58,37 +67,61 @@ function Popup(props) {
     return (
         <div className="popup" ref={popupRef}>
             <div className="popup-content" ref={popupContentRef}>
+                {/* title and close btn */}
                 <div className="head">
-                    <p>Add person</p>
+                    <p>{props.type == 'add' ? 'Add Lender' : 'Edit Lender'}</p>
                     <button onClick={handlePopupClose}>&#215;</button>
                 </div>
+                {/* detail inputs */}
                 <div className="inputs">
-                    <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
+                    <div className="lender-names">
+                        <span onClick={handleNameDropdown}>
+                            <input type="text" placeholder="Lender Name" value={name} onChange={e => setName(e.target.value)} />
+                            <span className="triangle"></span>
+                        </span>
+
+                        {/* names dropdown here */}
+                        <ul ref={nameRef}>
+                            {[...new Array(3)].map(_ => {
+                                return <li>john</li>
+                            })}
+                        </ul>
+                    </div>
                     <div className="type">
                         <span>
-                            <input type="radio" id="borrow" value='Borrow' name="type" checked={type == 'Borrow'} onChange={e => setType(e.target.value)} />
-                            <label htmlFor="borrow" style={{ color: 'red' }}>Borrow</label>
+                            <label htmlFor="borrow" style={{ color: 'red' }} className='borrow-label'>
+                                <input type="radio" id="borrow" value='Borrow' name="type" checked={type == 'Borrow'} onChange={e => setType(e.target.value)} />
+                                Borrow
+                            </label>
                         </span>
                         <span>
-                            <input type="radio" id="receive" value='Receive' name="type" checked={type == 'Receive'} onChange={e => setType(e.target.value)} />
-                            <label htmlFor="receive" style={{ color: 'green' }}>Receive</label>
+                            <label htmlFor="receive" style={{ color: 'green' }} className='receive-label'>
+                                <input type="radio" id="receive" value='Receive' name="type" checked={type == 'Receive'} onChange={e => setType(e.target.value)} />
+                                Receive
+                            </label>
                         </span>
                     </div>
                     <div className="money">
                         <input type="number" placeholder="Amount" value={amount} onChange={e => setAmount(e.target.value)} />
                         <div className="currency">
-                            <div className="custom-c-select" onClick={handleCurrencyDropdown}>
-                                <p className="selected-opt">{selectedCurrency}</p>
-                            </div>
-                            <div className="currency-dropdown" ref={currencyRef}>
-                                {currency.map((v, i) => <li key={i} className='lang' onClick={() => handleCurrencyClick(v)}>{v}</li>)}
-                            </div>
+                            <p onClick={handleCurrencyDropdown}>{selectedCurrency} <span className='triangle' ref={triRef}></span></p>
+                            <ul ref={currencyRef}>
+                                {currency.map((v, i) => <li onClick={() => handleCurrencyClick(v)}>{v}</li>)}
+                            </ul>
                         </div>
                         <p id='fyi'>All currency will be converted to USD</p>
                     </div>
                     <input type="date" value={date} onChange={e => setDate(e.target.value)} required />
                 </div>
-                <button className="add-btn" onClick={handleAddClick}>Add</button>
+                {/* submit, delete, update buttons */}
+                {
+                    props.type == 'add'
+                        ? <button className="add-lender-btn" onClick={handleAddClick}>Add</button>
+                        : <span className='edited'>
+                            <button className='delete-lender-btn'>Delete</button>
+                            <button className='update-lender-btn'>Update</button>
+                        </span>
+                }
             </div>
         </div>
     );

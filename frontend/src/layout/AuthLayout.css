@@ -64,6 +64,7 @@
     border: 1px solid var(--border2);
     height: 40px;
     width: 100%;
+    padding: 10px;
 }
 .form button{
     background-color: var(--primary);

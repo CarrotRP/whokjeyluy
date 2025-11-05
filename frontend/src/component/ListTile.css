@@ -1,0 +1,12 @@
+.tile{
+    border-bottom: 1px solid var(--border1);
+    padding: 10px 5px 10px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    user-select: none;
+}
+.tile #amount{
+    font-weight: bold;
+}

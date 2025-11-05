@@ -20,7 +20,7 @@
 .popup-content {
     position: absolute;
     width: 600px;
-    height: 500px;
+    height: 400px;
     left: 0;
     right: 0;
     top: 0;
@@ -40,13 +40,17 @@
     position: relative;
     justify-content: center;
     align-items: center;
-    font-size: 18px;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .head button {
     position: absolute;
     right: 0;
-    font-size: 20px;
+    font-size: 38px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
     text-box: trim-both cap alphabetic;
 }
 
@@ -66,62 +70,173 @@
     flex-direction: column;
     gap: 20px;
 }
-
-.inputs input {
+.inputs input[type='text'], 
+.inputs input[type='number'], 
+.inputs input[type='date']{
     padding: 10px;
     border-radius: 5px;
     border: 1px solid grey;
+    font-size: 16px;
+    width: 100%;
+}
+input[type="radio"]{
+    appearance: none;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 100%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+#borrow:checked{
+    border: 1px solid black;
+    background: radial-gradient(circle, var(--borrow) 55%, rgba(255, 255, 255, 1) 45%);
+}
+#receive:checked{
+    border: 1px solid black;
+    background: radial-gradient(circle, var(--receive) 55%, rgba(255, 255, 255, 1) 50%);
+}
+.borrow-label, .receive-label{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+.borrow-label:hover #borrow,
+.receive-label:hover #receive{
+    border: 1px solid black;
 }
 
-.add-btn {
+.triangle{
+    content: "";
+    width: 0;
+	height: 0;
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	border-top: 7px solid var(--primary-text);
+}
+
+/* lender names inputs and dropdown */
+.lender-names{
+    position: relative;
+}
+.lender-names span{
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+.lender-names .triangle{
+    position: absolute;
+    top: 18px;
+    right: 10px;
+}
+.lender-names ul{
+    position: absolute;
+    background-color: white;
+    list-style: none;
+    width: 100%;
+    border-radius: 5px;
+    border: 2px solid var(--primary);
+    top: 40px;
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+}
+.lender-names .lender-names-ul-active{
+    opacity: 1;
+    pointer-events: all;
+}
+.lender-names ul li{
+    padding: 5px 10px;
+}
+.lender-names ul li:hover{
+    background-color: rgba(0, 0, 0, 0.2);
+
+}
+
+/* submit, update, delete btns */
+.add-lender-btn,
+.update-lender-btn,
+.delete-lender-btn {
     width: 100px;
     justify-self: center;
-    border: 1px solid black;
     border-radius: 5px;
-    font-size: bold;
-    transition: background-color 0.5s, color 0.5s, border 0.5s;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: var(--secondary-text);
+    padding: 5px;
+    height: 45px;
 }
 
-.add-btn:hover {
-    background-color: cornflowerblue;
-    color: white;
-    border: 1px solid white;
+.edited{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.update-lender-btn,
+.add-lender-btn{
+    border: 2px solid var(--primary);
+    color: var(--primary);
+}
+.update-lender-btn:hover,
+.add-lender-btn:hover{
+    background-color: var(--primary);
+    color: var(--secondary-text);
+}
+.delete-lender-btn{
+    border: 2px solid var(--borrow);
+    color: var(--borrow);
+}
+.delete-lender-btn:hover{
+    background-color: var(--borrow);
+    color: var(--secondary-text);
 }
 
 /* currency dropdown */
-.custom-c-select {
-    display: grid;
-    align-items: center;
-    grid-template-areas: 'select';
-    width: 90px;
-    height: 100%;
-    padding: 10px;
-    cursor: pointer;
-    user-select: none;
-    z-index: 1;
-    border: 1px solid grey;
-    border-radius: 5px;
-}
-
-.custom-c-select::after {
-    content: '';
-    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
-    width: 0.8em;
-    height: 0.5em;
-    background-color: black;
-    justify-self: end;
-}
-
-.selected-opt,
-.custom-c-select::after {
-    grid-area: select;
-}
-
 .money {
     position: relative;
     display: flex;
+    /* align-items: center; */
+    gap: 5px;
+    margin-bottom: 20px;
+}
+.currency{
+    display: flex;
+    border: 1px solid var(--border2);
+    padding: 5px;
+    border-radius: 5px;
+    position: relative;
+}
+.currency p{
+    display: flex;
+    align-items: center;
     justify-content: space-between;
-    margin-bottom: 25px;
+    width: 50px;
+    gap: 5px;
+}
+.currency ul{
+    list-style: none;
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background-color: var(--secondary-text);
+    border: 2px solid var(--primary);
+    border-radius: 5px;
+    width: 100%;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+.currency .currency-ul-active{
+    opacity: 1;
+    pointer-events: all;
+}
+.currency ul li{
+    padding: 5px;
+}
+.currency ul li:hover{
+    background-color: var(--border1);
 }
 
 .money input {
@@ -131,31 +246,5 @@
 #fyi {
     position: absolute;
     bottom: -25px;
-    color: grey;
-}
-
-.currency-dropdown {
-    position: absolute;
-    bottom: -170%;
-    list-style: none;
-    cursor: pointer;
-    width: 90px;
-    background-color: white;
-    border: 1px solid grey;
-    border-radius: 5px;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s, bottom 0.3s, pointer-events 1s;
-}
-
-.dropdown-c-active {
-    opacity: 1;
-    pointer-events: all;
-    bottom: -180%;
-}
-
-/* hide arrow for input type number */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    appearance: none;
+    color: var(--border2);
 }

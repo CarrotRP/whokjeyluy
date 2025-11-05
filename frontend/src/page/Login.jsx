@@ -6,13 +6,13 @@ export default function Login() {
             <input type="email" id="email" />
             <label htmlFor="password">Password</label>
             <input type="password" id="password" />
-            <span className="option">
+            {/* <span className="option">
                 <span>
                     <input type='checkbox' id="remember" />
                     <label htmlFor="remember">Remember Me</label>
                 </span>
                 <p>Forgot Password</p>
-            </span>
+            </span> */}
             <button>Login</button>
         </>
     );

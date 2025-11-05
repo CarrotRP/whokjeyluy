@@ -16,18 +16,18 @@ function Navbar(props) {
     }
     const handlePopupClose = () => {
         popupRef.current.classList.remove('popup-active');
-        currencyRef.current.classList.remove('dropdown-c-active');
+        currencyRef.current.classList.remove('currency-ul-active');
     }
 
     useEffect(() => {
         const handleOutsideClick = (e) => {
             if (popupRef.current && popupRef.current.classList.contains('popup-active') && !popupContentRef.current.contains(e.target)) {
                 popupRef.current.classList.remove('popup-active');
-                currencyRef.current.classList.remove('dropdown-c-active');
+                currencyRef.current.classList.remove('currency-ul-active');
             }
 
             if(currencyRef.current && !currencyRef.current.contains(e.target)){
-                currencyRef.current.classList.remove('dropdown-c-active');
+                currencyRef.current.classList.remove('currency-ul-active');
             }
         }
         document.addEventListener('click', handleOutsideClick);
@@ -41,7 +41,7 @@ function Navbar(props) {
         <nav>
             <h1>WhoKjeyLuy</h1>
             <span className="right">
-                <button className='add-lender' onClick={handlePopupOpen}>+ Add person</button>
+                <button className='add-lender' onClick={handlePopupOpen}>+ Add Lender</button>
                 <img src={moon} alt="dark-mode" />
                 <img src={profile} alt="user" />
                 <Popup 
@@ -54,7 +54,10 @@ function Navbar(props) {
                     fetcher={{
                         fetchTransaction,
                         fetchSummary
-                    }}/>
+                    }}
+                    
+                    type="add"
+                    />
             </span>
         </nav>
     );

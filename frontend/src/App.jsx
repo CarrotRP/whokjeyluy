@@ -1,5 +1,3 @@
-import Navbar from "./component/Navbar"
-import ContentDisplay from "./component/ContentDisplay"
 import { useState, useContext, useEffect } from "react"
 import { UrlContext } from './context/UrlContext';
 import { BrowserRouter, Routes, Route } from "react-router";

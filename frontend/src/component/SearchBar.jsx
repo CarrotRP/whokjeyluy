@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { UrlContext } from "../context/UrlContext";
+import './SearchBar.css';
 import filter from '../assets/funnel.svg'
 
 function SearchBar(props) {
@@ -18,8 +19,11 @@ function SearchBar(props) {
 
     return (
         <span className="searchBar">
-            <input type="text" className="search" placeholder="Search by name" value={name} onChange={e => setName(e.target.value)} />
-            {/* this is for multiple delete, (checkbox, use array, query delete where in (?)) */}
+            <span>
+                <input type="text" className="search" placeholder="Search by name"/>
+                <button>Search</button>
+                {/* this is for multiple delete, (checkbox, use array, query delete where in (?)) */}
+            </span>
             <img src={filter} alt="" />
         </span>
     );

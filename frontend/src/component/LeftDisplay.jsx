@@ -1,14 +1,12 @@
 import SearchBar from './SearchBar';
-import ListContent from './ListContent';
+import LeftContent from './LeftContent';
 
 export default function LeftDisplay() {
     
     return (
         <section className='left-display'>
             <SearchBar/>
-            <ListContent/>
-            {/* add pagination here*/}
-            {/* language changer here */}
+            <LeftContent/>
         </section>
     );
 }
