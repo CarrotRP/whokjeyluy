@@ -7,9 +7,9 @@ function ListTile(props) {
             <p id="amount"
                 style={{
                     color: props.amount == 0 ?
-                        'white' 
-                        : props.amount < 0 ? 'red' 
-                        : 'green'
+                        'var(--secondary-text)' 
+                        : props.amount < 0 ? 'var(--borrow)' 
+                        : 'var(--receive)'
                 }}>
                 {
                 //if in summary section

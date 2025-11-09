@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { BASE_URL } from '../config/config';
 import './Popup.css';
 
 function Popup(props) {
@@ -8,18 +9,24 @@ function Popup(props) {
     const [amount, setAmount] = useState(0);
     const [date, setDate] = useState('');
 
-    const nameRef = useRef();
-    const triRef = useRef(); //triangle shape ref for animation
-
     //props
     const { refs, handlePopupClose, fetcher } = props;
-    const { currencyRef, popupRef, popupContentRef } = refs;
+    const { nameRef, nameTriRef, triRef, currencyRef, popupRef, popupContentRef } = refs;
     const { fetchTransaction, fetchSummary } = fetcher;
 
     const currency = ['USD', '៛'];
 
-    const handleNameDropdown = () => {
+    const handleNameDropdown = (e) => {
+        e.stopPropagation();
         nameRef.current?.classList.toggle('lender-names-ul-active')
+        nameTriRef.current.style.transform = nameTriRef.current.style.transform === 'rotateX(180deg)' ? 'rotateX(0deg)' : 'rotateX(180deg)';
+    }
+
+    //using eventDelegation
+    const handleNameClick = (e) => {
+        setName(e.target.textContent);
+        nameRef.current?.classList.toggle('lender-names-ul-active')
+        nameTriRef.current.style.transform = nameTriRef.current.style.transform === 'rotateX(180deg)' ? 'rotateX(0deg)' : 'rotateX(180deg)';
     }
 
     const handleCurrencyDropdown = (e) => {
@@ -32,6 +39,7 @@ function Popup(props) {
         currencyRef.current.classList.toggle('currency-ul-active');
         triRef.current.style.transform = triRef.current.style.transform === 'rotateX(180deg)' ? 'rotateX(0deg)' : 'rotateX(180deg)';
     }
+
     const handleAddClick = () => {
         console.log(selectedCurrency, typeof selectedCurrency, typeof 'usd');
         if (name && type && amount && date) {
@@ -41,7 +49,7 @@ function Popup(props) {
             //borrow or receive, if borrow add - to the front
             newAmount = type == 'Borrow' ? -newAmount : newAmount;
 
-            fetch('http://localhost:3000/user/add', {
+            fetch(`${BASE_URL}/user/add`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -77,13 +85,13 @@ function Popup(props) {
                     <div className="lender-names">
                         <span onClick={handleNameDropdown}>
                             <input type="text" placeholder="Lender Name" value={name} onChange={e => setName(e.target.value)} />
-                            <span className="triangle"></span>
+                            <span className="triangle" ref={nameTriRef}></span>
                         </span>
 
                         {/* names dropdown here */}
-                        <ul ref={nameRef}>
-                            {[...new Array(3)].map(_ => {
-                                return <li>john</li>
+                        <ul ref={nameRef} onClick={handleNameClick}>
+                            {[...new Array(3)].map((_, i) => {
+                                return <li>john {i}</li>
                             })}
                         </ul>
                     </div>

@@ -13,7 +13,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const limit = 5;
-  const { url } = useContext(UrlContext);
+  // const { url } = useContext(UrlContext);
 
   // const fetchTransaction = () => {
   //   const pageParams = `page=${currentPage}&limit=${limit}`;

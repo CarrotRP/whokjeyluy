@@ -5,23 +5,27 @@ A way to keep track of who borrow or give back your money. You can add the perso
 **Currently WIP**
 
 ## Technologies used
-- MySQL
+- Mongodb
 - Express
 - React
 - NodeJS
 ## package
-- CORS
-- mysql2
+- bcrypt
+- cookie-parser
+- cors
 - dotenv
 - express
+- jsonwebtoken
+- mongoose
 
 ### TODO:
-- [x] pagination
+- [ ] proper logout button
+- [ ] import/export data
+- [ ] pagination
 - [ ] delete
 - [ ] edit
-- [ ] language
-- [ ] dark mode
-- [ ] quick add user button in left display
+- [ ] multi lang support
+- [ ] dark mode - prob not?
 - [ ] get user name and display in dropdown
 
 ## Screenshots
@@ -45,17 +49,15 @@ cd whokjeyluy/frontend; npm install
 # Go to backend and install dependencies
 cd whokjeyluy/backend; npm install
 
-# Create your database in mysql and call it what you want, 'wkl' for default, then create .env file inside whokjeyluy/backend
+# Create your database in mongodb and call it what you want, then create .env file inside whokjeyluy/backend
 # inside .env
-# host = localhost_or_your_host_name
-# user = root_or_your_user_name
-# password = your_mysql_password
-# database = wkl_or_your_own_database_name
+# check .env.example for references
+# also create .env in whokjeyluy/frontend
 
 # In the backend terminal run
 node app
 # Or if you have nodemon
-nodemon
+nodemon app
 
 # In the frontend terminal run
 npm run dev

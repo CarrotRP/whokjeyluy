@@ -9,6 +9,7 @@ nav {
 nav h1 {
     font-family: 'Dancing Script';
     font-size: 32px;
+    color: var(--primary);
 }
 /* right side - add, display mode, profile */
 .right {
@@ -17,7 +18,7 @@ nav h1 {
     gap: 40px;
 }
 .add-lender {
-    border: 1px solid var(--border2);
+    border: 2px solid var(--primary);
     width: 105px;
     height: 35px;
     border-radius: 5px;
@@ -25,6 +26,7 @@ nav h1 {
     background-color: transparent;
     cursor: pointer;
     font-size: 14px;
+    color: var(--primary);
 }
 .add-lender:hover{
     background-color: var(--primary);

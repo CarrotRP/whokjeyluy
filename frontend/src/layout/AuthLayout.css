@@ -54,12 +54,14 @@
 .right-panel h2{
     align-self: center;
     font-size: 48px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 .form h2 ~ label{
     margin-top: 10px;
 }
-.form input[type='email'], .form input[type='password']{
+.form input[type='text'],
+.form input[type='email'], 
+.form input[type='password']{
     border-radius: 10px;
     border: 1px solid var(--border2);
     height: 40px;
