@@ -1,7 +1,6 @@
 const Lender = require('../models/lenderModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { redirect } = require('react-router-dom');
 
 const lender_login = (req, res) => {
     const {email, password} = req.body;
@@ -42,21 +41,11 @@ const check_auth = (req, res) => {
 
     const data = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
-    Lender.findById(data.id)
+    Lender.findById(data.id).select('-password') //dont select password
         .then(result => {
             if(!result) return res.json({authenticate: false, redirect: '/login'});
             res.json({authenticate: true, redirect: '/', user: result});
         })
-}
-
-const get_lend_list = (req, res) => {
-    console.log('hello', req.user);
-
-    res.json('hello' + req.user);
-}
-
-const get_summary = (req, res) => {
-
 }
 
 const lender_logout = (req, res) => {
@@ -68,7 +57,5 @@ module.exports = {
     lender_login,
     lender_signup,
     check_auth,
-    get_lend_list,
-    get_summary,
     lender_logout
 }

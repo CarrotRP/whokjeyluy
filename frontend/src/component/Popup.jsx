@@ -1,6 +1,7 @@
-import { useState, useRef } from 'react';
+import { useState, useContext } from 'react';
 import { BASE_URL } from '../config/config';
 import './Popup.css';
+import { LenderContext } from '../context/LenderContext';
 
 function Popup(props) {
     const [selectedCurrency, setSelectedCurrency] = useState('USD');
@@ -9,23 +10,25 @@ function Popup(props) {
     const [amount, setAmount] = useState(0);
     const [date, setDate] = useState('');
 
+    const {user} = useContext(LenderContext);
+
     //props
-    const { refs, handlePopupClose, fetcher } = props;
+    const { refs, handlePopupClose, fetcher, summary } = props;
     const { nameRef, nameTriRef, triRef, currencyRef, popupRef, popupContentRef } = refs;
-    const { fetchTransaction, fetchSummary } = fetcher;
+    const { fetchLoans, fetchSummary } = fetcher;
 
     const currency = ['USD', '៛'];
 
     const handleNameDropdown = (e) => {
         e.stopPropagation();
-        nameRef.current?.classList.toggle('lender-names-ul-active')
+        nameRef.current?.classList.toggle('borrower-names-ul-active')
         nameTriRef.current.style.transform = nameTriRef.current.style.transform === 'rotateX(180deg)' ? 'rotateX(0deg)' : 'rotateX(180deg)';
     }
 
     //using eventDelegation
     const handleNameClick = (e) => {
         setName(e.target.textContent);
-        nameRef.current?.classList.toggle('lender-names-ul-active')
+        nameRef.current?.classList.toggle('borrower-names-ul-active')
         nameTriRef.current.style.transform = nameTriRef.current.style.transform === 'rotateX(180deg)' ? 'rotateX(0deg)' : 'rotateX(180deg)';
     }
 
@@ -43,19 +46,21 @@ function Popup(props) {
     const handleAddClick = () => {
         console.log(selectedCurrency, typeof selectedCurrency, typeof 'usd');
         if (name && type && amount && date) {
+            console.log('heh')
             //convert to USD(from Riel, using 1$ = 4000r)
             var newAmount = selectedCurrency == 'USD' ? amount : (amount / 4000);
 
             //borrow or receive, if borrow add - to the front
             newAmount = type == 'Borrow' ? -newAmount : newAmount;
 
-            fetch(`${BASE_URL}/user/add`, {
+            fetch(`${BASE_URL}/add`, {
+                credentials: 'include',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(
-                    { name, transaction_type: type, amount: newAmount, date }
+                    { name, lend_type: type, amount: newAmount, date }
                 )
             }).then(res => res.json())
                 .then(data => {
@@ -66,7 +71,8 @@ function Popup(props) {
                     setAmount(0);
                     setDate('');
                     setSelectedCurrency('USD');
-                    fetchTransaction();
+
+                    fetchLoans();
                     fetchSummary();
                 });
         }
@@ -77,21 +83,21 @@ function Popup(props) {
             <div className="popup-content" ref={popupContentRef}>
                 {/* title and close btn */}
                 <div className="head">
-                    <p>{props.type == 'add' ? 'Add Lender' : 'Edit Lender'}</p>
+                    <p onClick={() => console.log('user: ', user)}>{props.type == 'add' ? 'Add Borrower' : 'Edit Borrower'}</p>
                     <button onClick={handlePopupClose}>&#215;</button>
                 </div>
                 {/* detail inputs */}
                 <div className="inputs">
-                    <div className="lender-names">
+                    <div className="borrower-names">
                         <span onClick={handleNameDropdown}>
-                            <input type="text" placeholder="Lender Name" value={name} onChange={e => setName(e.target.value)} />
+                            <input type="text" placeholder="Borrower Name" value={name} onChange={e => setName(e.target.value)} />
                             <span className="triangle" ref={nameTriRef}></span>
                         </span>
 
                         {/* names dropdown here */}
                         <ul ref={nameRef} onClick={handleNameClick}>
-                            {[...new Array(3)].map((_, i) => {
-                                return <li>john {i}</li>
+                            {summary?.map(s => {
+                                return <li key={s.userId}>{s._id}</li>
                             })}
                         </ul>
                     </div>
@@ -114,7 +120,7 @@ function Popup(props) {
                         <div className="currency">
                             <p onClick={handleCurrencyDropdown}>{selectedCurrency} <span className='triangle' ref={triRef}></span></p>
                             <ul ref={currencyRef}>
-                                {currency.map((v, i) => <li onClick={() => handleCurrencyClick(v)}>{v}</li>)}
+                                {currency.map((v, i) => <li key={i} onClick={() => handleCurrencyClick(v)}>{v}</li>)}
                             </ul>
                         </div>
                         <p id='fyi'>All currency will be converted to USD</p>
@@ -124,10 +130,10 @@ function Popup(props) {
                 {/* submit, delete, update buttons */}
                 {
                     props.type == 'add'
-                        ? <button className="add-lender-btn" onClick={handleAddClick}>Add</button>
+                        ? <button className="add-borrower-btn" onClick={handleAddClick}>Add</button>
                         : <span className='edited'>
-                            <button className='delete-lender-btn'>Delete</button>
-                            <button className='update-lender-btn'>Update</button>
+                            <button className='delete-borrower-btn'>Delete</button>
+                            <button className='update-borrower-btn'>Update</button>
                         </span>
                 }
             </div>

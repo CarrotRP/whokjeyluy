@@ -21,8 +21,8 @@ const loanSchema = new Schema({
     },
     lend_type: {
         type: String,
-        enum: ["borrow", "receive"],
-        default: "borrow"
+        enum: ["Borrow", "Receive"],
+        default: "Borrow"
     }
 })
 

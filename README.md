@@ -19,6 +19,7 @@ A way to keep track of who borrow or give back your money. You can add the perso
 - mongoose
 
 ### TODO:
+- [x] get user name and display in dropdown
 - [ ] proper logout button
 - [ ] import/export data
 - [ ] pagination
@@ -26,7 +27,6 @@ A way to keep track of who borrow or give back your money. You can add the perso
 - [ ] edit
 - [ ] multi lang support
 - [ ] dark mode - prob not?
-- [ ] get user name and display in dropdown
 
 ## Screenshots
 

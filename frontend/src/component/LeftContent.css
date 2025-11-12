@@ -54,8 +54,9 @@
     color: var(--primary);
 }
 #current-page{
-    width: 40px;
+    min-width: 40px;
     height: 35px;
+    padding: 0 5px;
     color: var(--secondary-text);
     border-radius: 5px;
     display: grid;
@@ -64,7 +65,8 @@
 }
 /* language */
 .language-selector{
-    position: relative;
+    position: absolute;
+    bottom: 13vh;
     width: 85px;
 }
 .language-selector p span{

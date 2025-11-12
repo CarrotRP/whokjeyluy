@@ -17,12 +17,10 @@ export default function AuthLayout() {
             console.log();
             if(data.authenticate){
                 navigate(data.redirect);
-                setIsLoading(false);
             } else{
                 navigate(data.redirect);
-                setIsLoading(false);
             }
-        })
+        }).finally(() => setIsLoading(false));
     }, [isLoading]);
 
     if(isLoading) return null;

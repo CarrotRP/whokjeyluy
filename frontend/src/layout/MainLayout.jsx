@@ -1,32 +1,65 @@
 import { Outlet, useNavigate } from "react-router";
 import Navbar from "../component/Navbar";
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BASE_URL } from "../config/config";
-import { useState } from "react";
+import { LenderContext } from '../context/LenderContext';
 
-export default function MainLayout(){
+export default function MainLayout() {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
+    const { dispatch } = useContext(LenderContext); //setting user data
+    const [loans, setLoans] = useState([]); //left display
+    const [summary, setSummary] = useState([]); //right display
+
+    //pagination
+    const [totalPage, setTotalPage] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const fetchLoans = () => {
+        fetch(`${BASE_URL}/?page=${currentPage}`, {
+            credentials: 'include'
+        }).then(res => res.json())
+        .then(data => {
+            setTotalPage(data.totalPage);
+            setLoans(data.result)
+        });
+    }
+
+    const fetchSummary = () => {
+        fetch(`${BASE_URL}/summary`, {
+            credentials: 'include'
+        }).then(res => res.json())
+        .then(data => {
+            setSummary(data)
+        });
+    }
 
     useEffect(() => {
         fetch(`${BASE_URL}/check-auth`, {
             credentials: 'include'
         }).then(res => res.json())
-        .then(data => {
-            if(data.authenticate){
-                navigate(data.redirect);
-            } else{
-                navigate(data.redirect);
-            }
-        }).finally(() => setIsLoading(false));
+            .then(data => {
+                if (data.authenticate) {
+                    navigate(data.redirect);
+                    console.log(data);
+                    dispatch({ type: 'SET_USER', payload: data.user });
+                } else {
+                    navigate(data.redirect);
+                }
+            }).finally(() => setIsLoading(false));
     }, [isLoading]);
 
-    if(isLoading) return null;
+    useEffect(() => {
+        fetchLoans();
+        fetchSummary();
+    }, [])
 
-    return(
+    if (isLoading) return null;
+
+    return (
         <>
-            <Navbar/>
-            <Outlet/>
+            <Navbar fetchLoans={fetchLoans} fetchSummary={fetchSummary} summary={summary}/>
+            <Outlet context={{loans, summary, currentPage, setCurrentPage, totalPage}}/>
         </>
     );
 }

@@ -115,22 +115,22 @@ input[type="radio"]{
 	border-top: 7px solid var(--primary-text);
 }
 
-/* lender names inputs and dropdown */
-.lender-names{
+/* borrower names inputs and dropdown */
+.borrower-names{
     position: relative;
 }
-.lender-names span{
+.borrower-names span{
     display: flex;
     position: relative;
     align-items: center;
 }
 
-.lender-names .triangle{
+.borrower-names .triangle{
     position: absolute;
     top: 18px;
     right: 10px;
 }
-.lender-names ul{
+.borrower-names ul{
     position: absolute;
     background-color: white;
     list-style: none;
@@ -142,22 +142,22 @@ input[type="radio"]{
     opacity: 0;
     pointer-events: none;
 }
-.lender-names .lender-names-ul-active{
+.borrower-names .borrower-names-ul-active{
     opacity: 1;
     pointer-events: all;
 }
-.lender-names ul li{
+.borrower-names ul li{
     padding: 5px 10px;
 }
-.lender-names ul li:hover{
+.borrower-names ul li:hover{
     background-color: rgba(0, 0, 0, 0.2);
 
 }
 
 /* submit, update, delete btns */
-.add-lender-btn,
-.update-lender-btn,
-.delete-lender-btn {
+.add-borrower-btn,
+.update-borrower-btn,
+.delete-borrower-btn {
     width: 100px;
     justify-self: center;
     border-radius: 5px;
@@ -174,21 +174,21 @@ input[type="radio"]{
     justify-content: center;
     gap: 10px;
 }
-.update-lender-btn,
-.add-lender-btn{
+.update-borrower-btn,
+.add-borrower-btn{
     border: 2px solid var(--primary);
     color: var(--primary);
 }
-.update-lender-btn:hover,
-.add-lender-btn:hover{
+.update-borrower-btn:hover,
+.add-borrower-btn:hover{
     background-color: var(--primary);
     color: var(--secondary-text);
 }
-.delete-lender-btn{
+.delete-borrower-btn{
     border: 2px solid var(--borrow);
     color: var(--borrow);
 }
-.delete-lender-btn:hover{
+.delete-borrower-btn:hover{
     background-color: var(--borrow);
     color: var(--secondary-text);
 }

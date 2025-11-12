@@ -9,14 +9,14 @@ import { useNavigate } from 'react-router';
 function Navbar(props) {
     const popupRef = useRef(null);
     const popupContentRef = useRef(null);
-    const currencyRef = useRef(null);
-    const nameRef = useRef();
-    const nameTriRef = useRef();
+    const currencyRef = useRef(null); //currency dropdown
+    const nameRef = useRef(); //borrower name dropdown
+    const nameTriRef = useRef(); //triangle shape for borrower name
     const triRef = useRef(); //triangle shape ref for animation(currency triangle)
-    
+
     const navigate = useNavigate();
 
-    const { fetchTransaction, fetchSummary } = props;
+    const { fetchLoans, fetchSummary, summary } = props;
 
     const handlePopupOpen = (e) => {
         e.stopPropagation();
@@ -32,9 +32,9 @@ function Navbar(props) {
             credentials: 'include',
             method: 'POST'
         }).then(res => res.json())
-        .then(data => {
-            navigate(data.redirect);
-        })
+            .then(data => {
+                navigate(data.redirect);
+            })
     }
 
     useEffect(() => {
@@ -42,6 +42,7 @@ function Navbar(props) {
             if (popupRef.current && popupRef.current.classList.contains('popup-active') && !popupContentRef.current.contains(e.target)) {
                 popupRef.current.classList.remove('popup-active');
                 currencyRef.current.classList.remove('currency-ul-active');
+                nameRef.current.classList.remove('borrower-names-ul-active');
             }
 
             if (currencyRef.current && !currencyRef.current.contains(e.target) && currencyRef.current.classList.contains('currency-ul-active')) {
@@ -49,8 +50,8 @@ function Navbar(props) {
                 triRef.current.style.transform = triRef.current.style.transform === 'rotateX(180deg)' ? 'rotateX(0deg)' : 'rotateX(180deg)';
             }
 
-            if(nameRef.current && !nameRef.current.contains(e.target) && nameRef.current.classList.contains('lender-names-ul-active')){
-                nameRef.current.classList.remove('lender-names-ul-active');
+            if (nameRef.current && !nameRef.current.contains(e.target) && nameRef.current.classList.contains('borrower-names-ul-active')) {
+                nameRef.current.classList.remove('borrower-names-ul-active');
                 nameTriRef.current.style.transform = nameTriRef.current.style.transform === 'rotateX(180deg)' ? 'rotateX(0deg)' : 'rotateX(180deg)';
             }
         }
@@ -65,7 +66,7 @@ function Navbar(props) {
         <nav>
             <h1 onClick={handleLogout}>WhoKjeyLuy</h1> {/**logout here for now */}
             <span className="right">
-                <button className='add-lender' onClick={handlePopupOpen}>+ Add Lender</button>
+                <button className='add-borrower' onClick={handlePopupOpen}>+ Add Borrower</button>
                 <img src={moon} alt="dark-mode" />
                 <img src={profile} alt="user" />
                 <Popup
@@ -79,10 +80,10 @@ function Navbar(props) {
                     }}
                     handlePopupClose={handlePopupClose}
                     fetcher={{
-                        fetchTransaction,
+                        fetchLoans,
                         fetchSummary
                     }}
-
+                    summary={summary}
                     type="add"
                 />
             </span>

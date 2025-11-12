@@ -8,6 +8,7 @@ const app = express();
 
 //Router
 const borrowerRoutes = require('./routes/lender');
+const loanRoutes = require('./routes/loans');
 
 app.use(cors({
     origin: process.env.CLIENT_URL,
@@ -21,5 +22,5 @@ mongoose.connect(process.env.DB_URL)
 app.use(express.json());
 app.use(cookieParser());
 
-
 app.use('/', borrowerRoutes);
+app.use('/', loanRoutes);
