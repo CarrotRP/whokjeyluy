@@ -47,7 +47,7 @@ function LeftContent(props) {
                             return <div className="list-box" key={data[0]}>
                                 <p id='transaction-date'>{data[0]}</p>
                                 {data[1].map(loan => {
-                                    return <ListTile key={loan._id} name={loan.borrower_id.username} amount={Number(loan.amount).toFixed(2)} />
+                                    return <ListTile key={loan._id} name={loan.borrower.username} amount={Number(loan.amount).toFixed(2)} />
                                 })}
                             </div>
                         })
@@ -62,7 +62,7 @@ function LeftContent(props) {
                     <button id='prev-page' onClick={() => { if (currentPage > 1) setCurrentPage(i => i -= 1) }}><img src={single} alt="previous-page icon" /></button>
                     <p id="current-page">{currentPage}</p>
                     <p id="total-page">of {totalPage}</p>
-                    <button id='next-page' onClick={() => { if (currentPage < totalPage) setCurrentPage(i => i += 1) }}><img src={single} alt="" /></button>
+                    <button id='next-page' onClick={() => { if (currentPage < totalPage) setCurrentPage(i => i+=1);console.log(currentPage) }}><img src={single} alt="" /></button>
                     <button id='last-page' onClick={() => setCurrentPage(totalPage)}><img src={double} alt="" /></button>
                 </div>
             }

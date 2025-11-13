@@ -10,7 +10,7 @@ function Popup(props) {
     const [amount, setAmount] = useState(0);
     const [date, setDate] = useState('');
 
-    const {user} = useContext(LenderContext);
+    const { user } = useContext(LenderContext);
 
     //props
     const { refs, handlePopupClose, fetcher, summary } = props;
@@ -91,15 +91,18 @@ function Popup(props) {
                     <div className="borrower-names">
                         <span onClick={handleNameDropdown}>
                             <input type="text" placeholder="Borrower Name" value={name} onChange={e => setName(e.target.value)} />
-                            <span className="triangle" ref={nameTriRef}></span>
+                            {summary.length > 0 && <span className="triangle" ref={nameTriRef}></span>}
                         </span>
 
                         {/* names dropdown here */}
-                        <ul ref={nameRef} onClick={handleNameClick}>
-                            {summary?.map(s => {
-                                return <li key={s.userId}>{s._id}</li>
-                            })}
-                        </ul>
+                        {
+                            summary.length > 0 &&
+                            <ul ref={nameRef} onClick={handleNameClick}>
+                                {summary?.map(s => {
+                                    return <li key={s.userId}>{s._id}</li>
+                                })}
+                            </ul>
+                        }
                     </div>
                     <div className="type">
                         <span>

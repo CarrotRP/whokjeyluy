@@ -4,11 +4,11 @@ import './Home.css';
 import { useOutletContext } from "react-router";
 
 export default function Home(){
-    const {loans, summary, currentPage, setCurrentPage, totalPage} = useOutletContext();
+    const {loans, summary, currentPage, setCurrentPage, totalPage, query, setQuery} = useOutletContext();
 
     return(
         <main className="home">
-            <LeftDisplay loans={loans} page={{currentPage, setCurrentPage, totalPage}}/>
+            <LeftDisplay loans={loans} summary={summary} page={{currentPage, setCurrentPage, totalPage}} query={query} setQuery={setQuery}/>
             <RightDisplay summary={summary}/>
         </main>
     );

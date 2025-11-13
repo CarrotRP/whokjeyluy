@@ -11,16 +11,20 @@ export default function Signup(){
     const navigate = useNavigate();
 
     const handleSignup = () => {
-        fetch(`${BASE_URL}/signup`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({username, email, password})
-        }).then(res => res.json())
-        .then(data => {
-            navigate(data.redirect);
-        })
+        if(username && email && password && conPassword){
+            if(password == conPassword){
+                fetch(`${BASE_URL}/signup`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({username, email, password})
+                }).then(res => res.json())
+                .then(data => {
+                    navigate(data.redirect);
+                })
+            }
+        }
     }
 
     return(

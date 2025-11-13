@@ -20,11 +20,12 @@ A way to keep track of who borrow or give back your money. You can add the perso
 
 ### TODO:
 - [x] get user name and display in dropdown
+- [x] pagination
+- [x] search
+- [ ] edit
+- [ ] delete
 - [ ] proper logout button
 - [ ] import/export data
-- [ ] pagination
-- [ ] delete
-- [ ] edit
 - [ ] multi lang support
 - [ ] dark mode - prob not?
 

@@ -1,5 +1,3 @@
-import { useState, useContext, useEffect } from "react"
-import { UrlContext } from './context/UrlContext';
 import { BrowserRouter, Routes, Route } from "react-router";
 import MainLayout from "./layout/MainLayout";
 import AuthLayout from "./layout/AuthLayout";

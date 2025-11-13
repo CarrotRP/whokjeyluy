@@ -14,9 +14,11 @@ export default function MainLayout() {
     //pagination
     const [totalPage, setTotalPage] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
+    //query
+    const [query, setQuery] = useState('');
 
     const fetchLoans = () => {
-        fetch(`${BASE_URL}/?page=${currentPage}`, {
+        fetch(`${BASE_URL}/?page=${currentPage}&query=${query}`, {
             credentials: 'include'
         }).then(res => res.json())
         .then(data => {
@@ -52,14 +54,22 @@ export default function MainLayout() {
     useEffect(() => {
         fetchLoans();
         fetchSummary();
-    }, [])
+    }, [currentPage]);
+
+    useEffect(() => {
+        const timeout = setTimeout(fetchLoans, 1000); //1s delay after typing, then search
+        
+        return () => {
+            clearTimeout(timeout); //clean previous timeout, so only latest timeout is running
+        }
+    }, [query]);
 
     if (isLoading) return null;
 
     return (
         <>
             <Navbar fetchLoans={fetchLoans} fetchSummary={fetchSummary} summary={summary}/>
-            <Outlet context={{loans, summary, currentPage, setCurrentPage, totalPage}}/>
+            <Outlet context={{loans, summary, currentPage, setCurrentPage, totalPage, query, setQuery}}/>
         </>
     );
 }
