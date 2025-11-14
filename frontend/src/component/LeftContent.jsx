@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 function LeftContent(props) {
     // const {info, setCurrentPage} = props;
     // const {transactions, currentPage, totalPage} = info;
-    const { loans, page } = props;
+    const { loans, page, handlePopupOpen } = props;
     const { currentPage, setCurrentPage, totalPage } = page;
 
     const langRef = useRef();
@@ -21,8 +21,18 @@ function LeftContent(props) {
         triRef.current.style.transform = triRef.current.style.transform === 'rotateX(180deg)' ? 'rotateX(0deg)' : 'rotateX(180deg)';
     }
 
-    //for handle outside click
+    const handleListClick = (e) => {
+        const tile = e.target.closest('.tile'); //get the nearest parents, or the first parents
+
+        if(tile && tile.dataset.listId){ //if theres nearest parents, and theres listId on it open popup
+            const content = tile.textContent.split(' ');
+            handlePopupOpen(e, {type: 'update', loan_id: tile.dataset.listId, name: content[0], amount: content[2], currency: content[3], date: tile.dataset.date});   
+        }
+    }
+
     useEffect(() => {
+        
+        //for handle outside click
         const handleOutsideClick = (e) => {
             if (langRef.current && langRef.current.classList.contains('ul-active') && !langRef.current.contains(e.target)) {
                 langRef.current.classList.remove('ul-active');
@@ -41,13 +51,13 @@ function LeftContent(props) {
     return (
         <div className="left-content">
             {loans.length > 0 ?
-                <section className='list'>
+                <section className='list' onClick={handleListClick}>
                     {
                         Object.entries(Object.groupBy(loans, ({ date }) => new Date(date).toLocaleString("en-GB", { dateStyle: 'medium' }))).map(data => {
                             return <div className="list-box" key={data[0]}>
                                 <p id='transaction-date'>{data[0]}</p>
                                 {data[1].map(loan => {
-                                    return <ListTile key={loan._id} name={loan.borrower.username} amount={Number(loan.amount).toFixed(2)} />
+                                    return <ListTile key={loan._id} name={loan.borrower.username} amount={Number(loan.amount).toFixed(2)} loan_id={loan._id} date={data[0]}/>
                                 })}
                             </div>
                         })
@@ -62,7 +72,7 @@ function LeftContent(props) {
                     <button id='prev-page' onClick={() => { if (currentPage > 1) setCurrentPage(i => i -= 1) }}><img src={single} alt="previous-page icon" /></button>
                     <p id="current-page">{currentPage}</p>
                     <p id="total-page">of {totalPage}</p>
-                    <button id='next-page' onClick={() => { if (currentPage < totalPage) setCurrentPage(i => i+=1);console.log(currentPage) }}><img src={single} alt="" /></button>
+                    <button id='next-page' onClick={() => { if (currentPage < totalPage) setCurrentPage(i => i += 1)}}><img src={single} alt="" /></button>
                     <button id='last-page' onClick={() => setCurrentPage(totalPage)}><img src={double} alt="" /></button>
                 </div>
             }

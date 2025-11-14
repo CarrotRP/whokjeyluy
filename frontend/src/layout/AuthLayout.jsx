@@ -14,7 +14,6 @@ export default function AuthLayout() {
             credentials: 'include'
         }).then(res => res.json())
         .then(data => {
-            console.log();
             if(data.authenticate){
                 navigate(data.redirect);
             } else{

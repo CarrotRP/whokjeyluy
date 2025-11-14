@@ -2,8 +2,8 @@ import './ListTile.css';
 
 function ListTile(props) {
     return (
-        <div className="tile">
-            <p id="name">{props.name}</p>
+        <div className="tile" data-list-id={props?.loan_id} data-date={new Date(props?.date).toLocaleString('en-GB', {dateStyle: 'short'})}>
+            <p id="name">{props.name} </p>
             <p id="amount"
                 style={{
                     color: props.amount == 0 ?

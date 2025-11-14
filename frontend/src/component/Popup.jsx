@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { BASE_URL } from '../config/config';
 import './Popup.css';
 import { LenderContext } from '../context/LenderContext';
+import { useEffect } from 'react';
 
 function Popup(props) {
     const [selectedCurrency, setSelectedCurrency] = useState('USD');
@@ -13,7 +14,7 @@ function Popup(props) {
     const { user } = useContext(LenderContext);
 
     //props
-    const { refs, handlePopupClose, fetcher, summary } = props;
+    const { popupType, refs, fetcher, summary } = props;
     const { nameRef, nameTriRef, triRef, currencyRef, popupRef, popupContentRef } = refs;
     const { fetchLoans, fetchSummary } = fetcher;
 
@@ -43,10 +44,28 @@ function Popup(props) {
         triRef.current.style.transform = triRef.current.style.transform === 'rotateX(180deg)' ? 'rotateX(0deg)' : 'rotateX(180deg)';
     }
 
+
+    const handlePopupClose = () => {
+        popupRef.current.classList.remove('popup-active');
+        currencyRef.current.classList.remove('currency-ul-active');
+    }
+
+    //close popup and refetch
+    const closeAndFetch = () => {
+        popupRef.current.classList.remove('popup-active');
+        currencyRef.current.classList.remove('dropdown-c-active');
+        setName('');
+        setType('Borrow');
+        setAmount(0);
+        setDate('');
+        setSelectedCurrency('USD');
+
+        fetchLoans();
+        fetchSummary();
+    }
+
     const handleAddClick = () => {
-        console.log(selectedCurrency, typeof selectedCurrency, typeof 'usd');
         if (name && type && amount && date) {
-            console.log('heh')
             //convert to USD(from Riel, using 1$ = 4000r)
             var newAmount = selectedCurrency == 'USD' ? amount : (amount / 4000);
 
@@ -64,26 +83,75 @@ function Popup(props) {
                 )
             }).then(res => res.json())
                 .then(data => {
-                    popupRef.current.classList.remove('popup-active');
-                    currencyRef.current.classList.remove('dropdown-c-active');
-                    setName('');
-                    setType('Borrow');
-                    setAmount(0);
-                    setDate('');
-                    setSelectedCurrency('USD');
-
-                    fetchLoans();
-                    fetchSummary();
+                    closeAndFetch();
                 });
         }
     }
+
+    const handleUpdateClick = () => {
+
+        //convert to USD(from Riel, using 1$ = 4000r)
+        var newAmount = selectedCurrency == 'USD' ? amount : (amount / 4000);
+
+        //borrow or receive, if borrow add - to the front
+        newAmount = type == 'Borrow' ? -newAmount : newAmount;
+
+        fetch(`${BASE_URL}/update/${popupType?.loan_id}`, {
+            credentials: 'include',
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, lend_type: type, amount: newAmount, date })
+        }).then(res => res.json())
+            .then(data => {
+                closeAndFetch();
+            });
+    }
+
+    const handleDeleteClick = () => {
+        fetch(`${BASE_URL}/delete/${popupType?.loan_id}`, {
+            credentials: 'include',
+            method: 'DELETE'
+        }).then(res => res.json())
+            .then(data => {
+                closeAndFetch();
+            });
+    }
+
+    useEffect(() => {
+        if (popupType?.loan_id) {
+
+            setName(popupType?.name);
+            setAmount(Math.abs(Number(popupType?.amount)));
+            setType(popupType?.amount > 0 ? 'Receive' : 'Borrow');
+            setSelectedCurrency(popupType?.currency);
+
+            //to set current date format(dd/mm/yyyy) to the input date format(yyyy-MM-dd)
+            const dateSplit = popupType?.date.split('/');
+
+            const year = dateSplit[2];
+            const month = dateSplit[1];
+            const date = dateSplit[0];
+
+            const newDate = `${year}-${month}-${date}`;
+
+            setDate(newDate);
+        } else{
+            setName('');
+            setAmount(0);
+            setType('Borrow');
+            setDate('');
+            setSelectedCurrency('USD');
+        }
+    }, [popupType]);
 
     return (
         <div className="popup" ref={popupRef}>
             <div className="popup-content" ref={popupContentRef}>
                 {/* title and close btn */}
                 <div className="head">
-                    <p onClick={() => console.log('user: ', user)}>{props.type == 'add' ? 'Add Borrower' : 'Edit Borrower'}</p>
+                    <p>{props.type == 'add' ? 'Add Borrower' : 'Edit Borrower'}</p>
                     <button onClick={handlePopupClose}>&#215;</button>
                 </div>
                 {/* detail inputs */}
@@ -132,11 +200,11 @@ function Popup(props) {
                 </div>
                 {/* submit, delete, update buttons */}
                 {
-                    props.type == 'add'
+                    popupType.type == 'add'
                         ? <button className="add-borrower-btn" onClick={handleAddClick}>Add</button>
                         : <span className='edited'>
-                            <button className='delete-borrower-btn'>Delete</button>
-                            <button className='update-borrower-btn'>Update</button>
+                            <button className='delete-borrower-btn' onClick={handleDeleteClick}>Delete</button>
+                            <button className='update-borrower-btn' onClick={handleUpdateClick}>Update</button>
                         </span>
                 }
             </div>

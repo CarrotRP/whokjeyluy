@@ -10,7 +10,6 @@ export default function Login() {
     const navigate = useNavigate();
 
     const handleLogin = () => {
-        console.log(email, password);
         fetch(`${BASE_URL}/login`, {
             credentials: 'include',
             method: 'POST',
@@ -20,7 +19,6 @@ export default function Login() {
             body: JSON.stringify({email, password})
         }).then(res => res.json())
         .then(data => {
-            console.log(data);
             navigate(data.redirect);
         })
     }

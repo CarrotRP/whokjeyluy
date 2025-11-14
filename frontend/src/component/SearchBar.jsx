@@ -14,7 +14,6 @@ function SearchBar(props) {
     const handleNameClick = (e) => {
         setQuery(e.target.textContent);
         borrowerRef.current.classList.remove('ul-active')
-        console.log(e.target.textContent);
     }
 
     useEffect(() => {
