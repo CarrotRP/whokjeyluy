@@ -24,9 +24,11 @@ A way to keep track of who borrow or give back your money. You can add the perso
 - [x] search
 - [x] edit
 - [x] delete
-- [ ] proper logout button
+- [x] proper logout button
+- [x] khmer lang support
+- [ ] edit user profile
+- [ ] filter loan list
 - [ ] import/export data
-- [ ] multi lang support
 - [ ] dark mode - prob not?
 - [ ] responsive
 

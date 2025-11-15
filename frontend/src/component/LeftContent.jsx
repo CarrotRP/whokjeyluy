@@ -4,12 +4,12 @@ import './LeftContent.css';
 import single from '../assets/single.png';
 import double from '../assets/double.png';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function LeftContent(props) {
-    // const {info, setCurrentPage} = props;
-    // const {transactions, currentPage, totalPage} = info;
-    const { loans, page, handlePopupOpen } = props;
+    const { loans, page, handlePopupOpen, language, setLanguage } = props;
     const { currentPage, setCurrentPage, totalPage } = page;
+    const {t} = useTranslation();
 
     const langRef = useRef();
     const triRef = useRef(); //this is for the triangle shape, it is near the language dropdown and the currency dropdown
@@ -26,7 +26,7 @@ function LeftContent(props) {
 
         if(tile && tile.dataset.listId){ //if theres nearest parents, and theres listId on it open popup
             const content = tile.textContent.split(' ');
-            handlePopupOpen(e, {type: 'update', loan_id: tile.dataset.listId, name: content[0], amount: content[2], currency: content[3], date: tile.dataset.date});   
+            handlePopupOpen(e, {type: 'update', loan_id: tile.dataset.listId, name: tile.textContent.slice(0, tile.textContent.search(/borrow|return/) - 1), amount: content[content.length - 2], currency: content[content.length - 1], date: tile.dataset.date});   
         }
     }
 
@@ -47,12 +47,12 @@ function LeftContent(props) {
         }
     }, []);
 
-
     return (
         <div className="left-content">
             {loans.length > 0 ?
                 <section className='list' onClick={handleListClick}>
                     {
+                        //TODO: change date to khmer also
                         Object.entries(Object.groupBy(loans, ({ date }) => new Date(date).toLocaleString("en-GB", { dateStyle: 'medium' }))).map(data => {
                             return <div className="list-box" key={data[0]}>
                                 <p id='transaction-date'>{data[0]}</p>
@@ -63,7 +63,7 @@ function LeftContent(props) {
                         })
                     }
                 </section>
-                : <p>No data yet!</p>
+                : <p>{t('no data')}</p>
             }
             {
                 totalPage > 0 &&
@@ -71,16 +71,16 @@ function LeftContent(props) {
                     <button id="first-page" onClick={() => setCurrentPage(1)}><img src={double} alt="first-page icon" /></button>
                     <button id='prev-page' onClick={() => { if (currentPage > 1) setCurrentPage(i => i -= 1) }}><img src={single} alt="previous-page icon" /></button>
                     <p id="current-page">{currentPage}</p>
-                    <p id="total-page">of {totalPage}</p>
+                    <p id="total-page">{t('of')} {totalPage}</p>
                     <button id='next-page' onClick={() => { if (currentPage < totalPage) setCurrentPage(i => i += 1)}}><img src={single} alt="" /></button>
                     <button id='last-page' onClick={() => setCurrentPage(totalPage)}><img src={double} alt="" /></button>
                 </div>
             }
             <div className="language-selector">
-                <p onClick={handleLangDropdown}>English <span className='triangle' ref={triRef}></span></p>
+                <p onClick={handleLangDropdown}>{language == 'en' ? t('english') : t('khmer')} <span className='triangle' ref={triRef}></span></p>
                 <ul ref={langRef}>
-                    <li>English</li>
-                    <li>Khmer</li>
+                    <li onClick={() => setLanguage('en')}>{t('english')}</li>
+                    <li onClick={() => setLanguage('kh')}>{t('khmer')}</li>
                 </ul>
             </div>
         </div>

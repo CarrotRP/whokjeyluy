@@ -4,6 +4,7 @@ import { useContext, useEffect, useState, useRef } from "react";
 import { BASE_URL } from "../config/config";
 import { LenderContext } from '../context/LenderContext';
 import Popup from "../component/Popup";
+import ProfilePopup from "../component/ProfilePopup";
 
 export default function MainLayout() {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ export default function MainLayout() {
     //query
     const [query, setQuery] = useState('');
 
-    //popup
+    //borrow popup
     const [popupType, setPopupType] = useState([]);
     const popupRef = useRef(null);
     const popupContentRef = useRef(null);
@@ -26,6 +27,11 @@ export default function MainLayout() {
     const nameRef = useRef(); //borrower name dropdown
     const nameTriRef = useRef(); //triangle shape for borrower name
     const triRef = useRef(); //triangle shape ref for animation(currency triangle)
+
+    //profile popup
+    const [isPopup, setIsPopup] = useState(false);
+    const profRef = useRef();
+    const profConRef = useRef();
 
     const fetchLoans = () => {
         fetch(`${BASE_URL}/?page=${currentPage}&query=${query}`, {
@@ -48,8 +54,13 @@ export default function MainLayout() {
 
     const handlePopupOpen = (e, type) => {
         e.stopPropagation();
-        popupRef.current.classList.toggle('popup-active');
+        popupRef.current?.classList.toggle('popup-active');
         setPopupType(type);
+    }
+
+    const handleProfPopupOpen = (e) => {
+        e.stopPropagation();
+        profRef.current.classList.toggle('profile-popup-active');
     }
 
     //check auth effect
@@ -100,6 +111,11 @@ export default function MainLayout() {
                 nameRef.current.classList.remove('borrower-names-ul-active');
                 nameTriRef.current.style.transform = nameTriRef.current.style.transform === 'rotateX(180deg)' ? 'rotateX(0deg)' : 'rotateX(180deg)';
             }
+
+            if(profRef.current && profRef.current.classList.contains('profile-popup-active') && !profConRef.current.contains(e.target)){
+                profRef.current.classList.remove('profile-popup-active');
+                setIsPopup(false);
+            }
         }
         document.addEventListener('click', handleOutsideClick);
 
@@ -112,9 +128,9 @@ export default function MainLayout() {
 
     return (
         <>
-            <Navbar fetchLoans={fetchLoans} fetchSummary={fetchSummary} summary={summary} handlePopupOpen={handlePopupOpen}/>
+            <Navbar handlePopupOpen={handlePopupOpen} handleProfPopupOpen={handleProfPopupOpen} setIsPopup={setIsPopup}/>
             <Outlet context={{ loans, summary, currentPage, setCurrentPage, totalPage, query, setQuery, handlePopupOpen}} />
-            {popupType &&
+            {//TODO: add conditional rendering (dont render until open)
             <Popup
                 popupType={popupType}
                 refs={{
@@ -131,6 +147,7 @@ export default function MainLayout() {
                 }}
                 summary={summary}
             />}
+            <ProfilePopup profRef={profRef} profConRef={profConRef} isPopup={isPopup} setIsPopup={setIsPopup}/>
         </>
     );
 }

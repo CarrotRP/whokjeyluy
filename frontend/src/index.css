@@ -1,5 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap'); /*roboto english font*/
+@import url('https://fonts.googleapis.com/css2?family=Hanuman:wght@100..900&display=swap'); /*hanuman khmer font*/
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap'); /*dancing script logo font*/
 
 :root{
   --primary: #005C83;
@@ -13,12 +14,19 @@
 
   --border1: #D1DBE3;
   --border2: grey;
+
+  --main-font: 'Roboto';
 }
+
+html[lang='kh']{
+  --main-font: 'Hanuman'
+}
+
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Roboto';
+  font-family: var(--main-font);
 }
 
 body{

@@ -1,8 +1,8 @@
 import { useState, useContext } from 'react';
 import { BASE_URL } from '../config/config';
 import './Popup.css';
-import { LenderContext } from '../context/LenderContext';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function Popup(props) {
     const [selectedCurrency, setSelectedCurrency] = useState('USD');
@@ -11,8 +11,8 @@ function Popup(props) {
     const [amount, setAmount] = useState(0);
     const [date, setDate] = useState('');
 
-    const { user } = useContext(LenderContext);
-
+    const {t} = useTranslation();
+    
     //props
     const { popupType, refs, fetcher, summary } = props;
     const { nameRef, nameTriRef, triRef, currencyRef, popupRef, popupContentRef } = refs;
@@ -151,7 +151,7 @@ function Popup(props) {
             <div className="popup-content" ref={popupContentRef}>
                 {/* title and close btn */}
                 <div className="head">
-                    <p>{props.type == 'add' ? 'Add Borrower' : 'Edit Borrower'}</p>
+                    <p>{popupType.type == 'add' ? t('add borrower') : t('edit borrower')}</p>
                     <button onClick={handlePopupClose}>&#215;</button>
                 </div>
                 {/* detail inputs */}
@@ -176,13 +176,13 @@ function Popup(props) {
                         <span>
                             <label htmlFor="borrow" style={{ color: 'red' }} className='borrow-label'>
                                 <input type="radio" id="borrow" value='Borrow' name="type" checked={type == 'Borrow'} onChange={e => setType(e.target.value)} />
-                                Borrow
+                                {t('borrow')}
                             </label>
                         </span>
                         <span>
                             <label htmlFor="receive" style={{ color: 'green' }} className='receive-label'>
                                 <input type="radio" id="receive" value='Receive' name="type" checked={type == 'Receive'} onChange={e => setType(e.target.value)} />
-                                Receive
+                                {t('receive')}
                             </label>
                         </span>
                     </div>
@@ -194,17 +194,17 @@ function Popup(props) {
                                 {currency.map((v, i) => <li key={i} onClick={() => handleCurrencyClick(v)}>{v}</li>)}
                             </ul>
                         </div>
-                        <p id='fyi'>All currency will be converted to USD</p>
+                        <p id='fyi'>{t('fyi')}</p>
                     </div>
                     <input type="date" value={date} onChange={e => setDate(e.target.value)} required />
                 </div>
                 {/* submit, delete, update buttons */}
                 {
                     popupType.type == 'add'
-                        ? <button className="add-borrower-btn" onClick={handleAddClick}>Add</button>
+                        ? <button className="add-borrower-btn" onClick={handleAddClick}>{t('add')}</button>
                         : <span className='edited'>
-                            <button className='delete-borrower-btn' onClick={handleDeleteClick}>Delete</button>
-                            <button className='update-borrower-btn' onClick={handleUpdateClick}>Update</button>
+                            <button className='delete-borrower-btn' onClick={handleDeleteClick}>{t('delete')}</button>
+                            <button className='update-borrower-btn' onClick={handleUpdateClick}>{t('update')}</button>
                         </span>
                 }
             </div>

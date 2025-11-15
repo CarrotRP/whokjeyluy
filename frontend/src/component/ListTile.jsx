@@ -1,6 +1,9 @@
 import './ListTile.css';
+import { useTranslation } from 'react-i18next';
 
 function ListTile(props) {
+    const {t} = useTranslation();
+
     return (
         <div className="tile" data-list-id={props?.loan_id} data-date={new Date(props?.date).toLocaleString('en-GB', {dateStyle: 'short'})}>
             <p id="name">{props.name} </p>
@@ -15,16 +18,16 @@ function ListTile(props) {
                 //if in summary section
                 props.loc == 'summary' ?
                     //if amount is 0, then they paid what they owed
-                    props.amount == 0 ? 'All money repaid'
+                    props.amount == 0 ? t('all paid')
                     // if amount if more than 0, user owe them
-                    : props.amount > 0 ? `owe them ${props.amount} USD`
+                    : props.amount > 0 ? t('owe them', {amount: props.amount})
                     //else they owe the user 
-                    : `owe you ${Math.abs(props.amount)} USD`
+                    : t('owe you', {amount: Math.abs(props.amount)})
                 // else in left section
                 // if amount is more than 0, they return what they owed
-                : props.amount > 0  ? `returned ${props.amount} USD`
+                : props.amount > 0  ? t('borrowed', {amount: props.amount})
                 //else they borrowed
-                : `borrowed ${props.amount} USD`}
+                : t('returned', {amount: props.amount})}
             </p>
         </div>
     );

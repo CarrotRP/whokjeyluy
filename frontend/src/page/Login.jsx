@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { BASE_URL } from "../config/config";
-import { useNavigate } from "react-router";
+import { useNavigate, useOutletContext } from "react-router";
 
 
 export default function Login() {
+    const { t } = useOutletContext();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -16,20 +18,20 @@ export default function Login() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({email, password})
+            body: JSON.stringify({ email, password })
         }).then(res => res.json())
-        .then(data => {
-            navigate(data.redirect);
-        })
+            .then(data => {
+                navigate(data.redirect);
+            })
     }
 
     return (
         <>
-            <h2>Login</h2>
-            <label htmlFor="email">Email</label>
-            <input type="email" id="email" onChange={(e) => setEmail(e.target.value)} value={email}/>
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" onChange={e => setPassword(e.target.value)} value={password}/>
+            <h2>{t('login')}</h2>
+            <label htmlFor="email">{t('email')}</label>
+            <input type="email" id="email" onChange={(e) => setEmail(e.target.value)} value={email} />
+            <label htmlFor="password">{t('password')}</label>
+            <input type="password" id="password" onChange={e => setPassword(e.target.value)} value={password} onKeyDown={e => { if (e.key == 'Enter') handleLogin(); }} />
             {/* <span className="option">
                 <span>
                     <input type='checkbox' id="remember" />
@@ -37,7 +39,7 @@ export default function Login() {
                 </span>
                 <p>Forgot Password</p>
             </span> */}
-            <button onClick={handleLogin}>Login</button>
+            <button onClick={handleLogin}>{t('login')}</button>
         </>
     );
 }

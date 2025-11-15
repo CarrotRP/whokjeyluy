@@ -1,0 +1,62 @@
+.profile-popup{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 500ms;
+}
+.profile-popup-active{
+    opacity: 1;
+    pointer-events: all;
+}
+.profile-popup-content{
+    background-color: white;
+    width: 600px;
+    height: 400px;
+    padding: 20px;
+    border-radius: 5px;
+    display: grid;
+    grid-template-rows: 50px 1fr 50px;
+}
+.profile-popup-content h1{
+    font-size: 24px;
+}
+/* body */
+.content-body .profile{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.content-body .profile img{
+    width: 50px;
+}
+.content-body .profile span{
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+} 
+.content-body .inputs{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 20px;
+}
+.content-body .inputs span{
+    display: flex;
+    flex-direction: column;
+}
+.content-body .inputs span input{
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--border2);
+    font-size: 16px;
+}
+.content-body .inputs span label{
+    font-size: 16px;
+}

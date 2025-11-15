@@ -1,0 +1,48 @@
+{
+    "welcome": "Welcome to",
+    "whokjeyluy": "WhoKjeyLuy",
+    "platform": "A platform to track who borrow, pay back money and summary owe amount. Handy for those who are lazy to write notes and calculation.",
+    "login": "Login",
+    "signup": "Sign up",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "confirm pw": "Confirm Password",
+    "no account": "No account? <bold>Sign up</bold>",
+    "have account": "Have an account? <bold>Login</bold>",
+
+    "search": "Search",
+    "search by": "Search by name",
+    "borrowed": "borrowed {{amount}} USD",
+    "returned": "returned {{amount}} USD",
+    "of": "of",
+    "no data": "No data yet!",
+
+    "en": "English",
+    "kh": "Khmer",
+
+    "summary": "Summary",
+    "no summary": "No summary yet!",
+    "owe you": "owe you {{amount}} USD",
+    "owe them": "owe them {{amount}} USD",
+    "all paid": "All money repaid",
+
+    "add borrower": "Add Borrower",
+    "edit borrower": "Edit Borrower",
+    "borrow": "Borrow",
+    "receive": "Receive",
+    "USD": "USD",
+    "៛": "៛",
+    "fyi": "All currency will be converted to USD",
+    "add": "Add",
+    "delete": "Delete",
+    "update": "Update",
+
+    "profile": "Profile",
+    "new pw": "New Password",
+    "confirm new pw": "Confirm New Password",
+    "cancel": "Cancel",
+
+    "edit profile": "Edit Profile",
+    "logout": "Logout"
+}

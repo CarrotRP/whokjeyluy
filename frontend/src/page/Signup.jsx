@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { BASE_URL } from "../config/config";
-import { useNavigate } from "react-router";
+import { useNavigate, useOutletContext } from "react-router";
 
 export default function Signup(){
+    const {t} = useOutletContext();
+
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -29,16 +31,16 @@ export default function Signup(){
 
     return(
         <>
-            <h2>Sign up</h2>
-            <label htmlFor="username">Username</label>
+            <h2>{t('signup')}</h2>
+            <label htmlFor="username">{t('username')}</label>
             <input type="text" id="username" onChange={e => setUsername(e.target.value)} value={username}/>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">{t('email')}</label>
             <input type="email" id="email" onChange={e => setEmail(e.target.value)} value={email}/>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">{t('password')}</label>
             <input type="password" id="password" onChange={e => setPassword(e.target.value)} value={password}/>
-            <label htmlFor="conpassword">Confirm Password</label>
+            <label htmlFor="conpassword">{t('confirm pw')}</label>
             <input type="password" id="conpassword" onChange={e => setConPassword(e.target.value)} value={conPassword}/>
-            <button onClick={handleSignup}>Sign up</button>
+            <button onClick={handleSignup}>{t('signup')}</button>
         </>
     );
 }

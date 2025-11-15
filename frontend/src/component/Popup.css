@@ -157,7 +157,9 @@ input[type="radio"]{
 /* submit, update, delete btns */
 .add-borrower-btn,
 .update-borrower-btn,
-.delete-borrower-btn {
+.delete-borrower-btn,
+.cancel-btn,
+.update-btn {
     width: 100px;
     justify-self: center;
     border-radius: 5px;
@@ -175,20 +177,24 @@ input[type="radio"]{
     gap: 10px;
 }
 .update-borrower-btn,
-.add-borrower-btn{
+.add-borrower-btn,
+.update-btn{
     border: 2px solid var(--primary);
     color: var(--primary);
 }
 .update-borrower-btn:hover,
-.add-borrower-btn:hover{
+.add-borrower-btn:hover,
+.update-btn:hover{
     background-color: var(--primary);
     color: var(--secondary-text);
 }
-.delete-borrower-btn{
+.delete-borrower-btn,
+.cancel-btn{
     border: 2px solid var(--borrow);
     color: var(--borrow);
 }
-.delete-borrower-btn:hover{
+.delete-borrower-btn:hover,
+.cancel-btn:hover{
     background-color: var(--borrow);
     color: var(--secondary-text);
 }

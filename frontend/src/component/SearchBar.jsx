@@ -1,9 +1,11 @@
 import { useEffect, useRef } from "react";
 import './SearchBar.css';
 import filter from '../assets/funnel.svg'
+import { useTranslation } from "react-i18next";
 
 function SearchBar(props) {
     const { summary, query, setQuery } = props;
+    const {t} = useTranslation();
     const borrowerRef = useRef();
 
     const handleSearchDropdown = (e) => {
@@ -33,8 +35,8 @@ function SearchBar(props) {
     return (
         <span className="searchBar">
             <span>
-                <input type="text" className="search" placeholder="Search by name" onClick={handleSearchDropdown} value={query} onChange={e => setQuery(e.target.value)}/>
-                <button>Search</button> {/*might remove this button later, cuz using autosearch(or debounce search) */}
+                <input type="text" className="search" placeholder={t('search by')} onClick={handleSearchDropdown} value={query} onChange={e => setQuery(e.target.value)}/>
+                <button>{t('search')}</button> {/*might remove this button later, cuz using autosearch(or debounce search) */}
             </span>
             {
                 summary.length > 0 &&
