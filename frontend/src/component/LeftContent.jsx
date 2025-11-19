@@ -77,10 +77,10 @@ function LeftContent(props) {
                 </div>
             }
             <div className="language-selector">
-                <p onClick={handleLangDropdown}>{language == 'en' ? t('english') : t('khmer')} <span className='triangle' ref={triRef}></span></p>
+                <p onClick={handleLangDropdown}>{t(language)} <span className='triangle' ref={triRef}></span></p>
                 <ul ref={langRef}>
-                    <li onClick={() => setLanguage('en')}>{t('english')}</li>
-                    <li onClick={() => setLanguage('kh')}>{t('khmer')}</li>
+                    <li onClick={() => {setLanguage('en'); langRef.current.classList.remove('ul-active'); triRef.current.style.transform = triRef.current.style.transform === 'rotateX(180deg)' ? 'rotateX(0deg)' : 'rotateX(180deg)';}}>{t('en')}</li>
+                    <li onClick={() => {setLanguage('kh'); langRef.current.classList.remove('ul-active'); triRef.current.style.transform = triRef.current.style.transform === 'rotateX(180deg)' ? 'rotateX(0deg)' : 'rotateX(180deg)';}}>{t('kh')}</li>
                 </ul>
             </div>
         </div>

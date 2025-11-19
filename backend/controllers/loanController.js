@@ -106,6 +106,14 @@ const get_loan_list = async (req, res) => {
     res.json({ totalPage, result });
 }
 
+const get_one_loan = (req, res) => {
+    const {id} = req.params;
+
+    Loan.findById(id)
+        .populate('borrower_id', 'username')
+        .then(result => res.json(result));
+}
+
 const get_summary = (req, res) => {
     Loan.aggregate(
         [
@@ -144,5 +152,6 @@ module.exports = {
     update_loan,
     delete_loan,
     get_loan_list,
+    get_one_loan,
     get_summary
 }

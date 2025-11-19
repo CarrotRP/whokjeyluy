@@ -122,21 +122,16 @@ function Popup(props) {
     useEffect(() => {
         if (popupType?.loan_id) {
 
-            setName(popupType?.name);
-            setAmount(Math.abs(Number(popupType?.amount)));
-            setType(popupType?.amount > 0 ? 'Receive' : 'Borrow');
-            setSelectedCurrency(popupType?.currency);
-
-            //to set current date format(dd/mm/yyyy) to the input date format(yyyy-MM-dd)
-            const dateSplit = popupType?.date.split('/');
-
-            const year = dateSplit[2];
-            const month = dateSplit[1];
-            const date = dateSplit[0];
-
-            const newDate = `${year}-${month}-${date}`;
-
-            setDate(newDate);
+            fetch(`${BASE_URL}/${popupType?.loan_id}`, {
+                credentials: 'include'
+            }).then(res => res.json())
+            .then(data => {
+                setName(data?.borrower_id.username);
+                setAmount(Math.abs(Number(data?.amount)));
+                setType(data?.lend_type);
+                setSelectedCurrency('USD');
+                setDate(data?.date.split('T')[0]);
+            })
         } else{
             setName('');
             setAmount(0);
@@ -158,7 +153,7 @@ function Popup(props) {
                 <div className="inputs">
                     <div className="borrower-names">
                         <span onClick={handleNameDropdown}>
-                            <input type="text" placeholder="Borrower Name" value={name} onChange={e => setName(e.target.value)} />
+                            <input type="text" placeholder={t('borrower name')} value={name} onChange={e => setName(e.target.value)} />
                             {summary.length > 0 && <span className="triangle" ref={nameTriRef}></span>}
                         </span>
 
@@ -189,9 +184,9 @@ function Popup(props) {
                     <div className="money">
                         <input type="number" placeholder="Amount" value={amount} onChange={e => setAmount(e.target.value)} />
                         <div className="currency">
-                            <p onClick={handleCurrencyDropdown}>{selectedCurrency} <span className='triangle' ref={triRef}></span></p>
+                            <p onClick={handleCurrencyDropdown}>{t(selectedCurrency)} <span className='triangle' ref={triRef}></span></p>
                             <ul ref={currencyRef}>
-                                {currency.map((v, i) => <li key={i} onClick={() => handleCurrencyClick(v)}>{v}</li>)}
+                                {currency.map((v, i) => <li key={i} onClick={() => handleCurrencyClick(v)}>{t(v)}</li>)}
                             </ul>
                         </div>
                         <p id='fyi'>{t('fyi')}</p>

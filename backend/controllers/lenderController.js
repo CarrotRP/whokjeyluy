@@ -34,6 +34,15 @@ const lender_signup = async (req, res) => {
     
 }
 
+const lender_update = async (req, res) => {
+    const {username, email, password} = req.body;
+
+    const hash_pw = await bcrypt.hash(password, 10);
+
+    Lender.findByIdAndUpdate(req.user.id, {username, email, password: hash_pw}, {new: true})
+        .then(result => res.json(result));
+}
+
 const check_auth = (req, res) => {
     const token = req.cookies?.token;
 
@@ -56,6 +65,7 @@ const lender_logout = (req, res) => {
 module.exports = {
     lender_login,
     lender_signup,
+    lender_update,
     check_auth,
     lender_logout
 }

@@ -26,7 +26,7 @@ A way to keep track of who borrow or give back your money. You can add the perso
 - [x] delete
 - [x] proper logout button
 - [x] khmer lang support
-- [ ] edit user profile
+- [x] edit user profile
 - [ ] filter loan list
 - [ ] import/export data
 - [ ] dark mode - prob not?
@@ -35,9 +35,9 @@ A way to keep track of who borrow or give back your money. You can add the perso
 ## Screenshots
 
 ### display screen
-![display-screen](/assets/screenshot1.png)
+![display-screen](/assets/newdisplay.png)
 ### Add person screen
-![add-screen](/assets/screenshot2.png)
+![add-screen](/assets/newadd.png)
 
 ## How to use
 
