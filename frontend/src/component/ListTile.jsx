@@ -25,9 +25,9 @@ function ListTile(props) {
                     : t('owe you', {amount: Math.abs(props.amount)})
                 // else in left section
                 // if amount is more than 0, they return what they owed
-                : props.amount > 0  ? t('borrowed', {amount: props.amount})
+                : props.amount > 0  ? t('returned', {amount: props.amount})
                 //else they borrowed
-                : t('returned', {amount: props.amount})}
+                : t('borrowed', {amount: props.amount})}
             </p>
         </div>
     );
